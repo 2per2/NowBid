@@ -1,33 +1,50 @@
 const http = require("http");
 const { Server } = require("socket.io");
-//const { instrument } = require("@socket.io/admin-ui");
+const { instrument } = require("@socket.io/admin-ui");
 const express = require("express");
 const app = express();
+
+
+/* Routers */
+const homeRouter = require("./router/homeRouter");
 
 
 /* Setting app */
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
-app.set("port", process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
 app.use("/public", express.static(__dirname + "/public"));
 app.use(
     express.urlencoded({
         extended: false
     })
 );
-//app.get('/', (req, res) => { res.render('home') });
+app.use(express.json());
+
+
+/* Routing */
+app.get('/', (req, res) => { res.render('index') });
 
 
 /* Setting http server and socket.io */
 const httpServer = http.createServer(app);
-const wsServer = new Server(httpServer);
+const io = new Server(httpServer, {
+    // you can admin-ui by visiting admin.socket.io/admin
+    cors: { 
+        origin: ["https://admin.socket.io"],
+        credentials: true,
+        },
+    }
+);
+instrument(io, {
+    auth: false,
+    }
+);
 
-wsServer.on("connection", (socket) => {
-	console.log("someone connected!");
-});
+require("./socket")(io);
 
 
 /* Start server */
-httpServer.listen(port, () => {
-	console.log("start server");
+httpServer.listen(PORT, () => {
+	console.log(`Server is running at http://localhost:${PORT}`);
 });
