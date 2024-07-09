@@ -9,6 +9,16 @@ const app = express();
 const homeRouter = require("./router/homeRouter");
 
 
+/* Initialize sequelize */
+const db = require('./models');
+
+db.sequelize.sync().then(() => {
+	console.log('Database synchronized successfully');
+}).catch(error => {
+	console.log('Database synchronized failed', error);
+});
+
+
 /* Setting app */
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
