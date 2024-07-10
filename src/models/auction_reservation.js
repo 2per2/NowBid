@@ -21,9 +21,8 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'seller_id'
         });
 
-        Auction_reservation.belongsTo(models.auction_history, {
-            foreignKey: 'photo_path',
-            sourceKey: 'photo_path'
+        Auction_reservation.hasMany(models.photo, {
+            foreignKey: 'photo_id'
         });
     };
 

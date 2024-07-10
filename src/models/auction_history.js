@@ -18,9 +18,8 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'bidder_id'
         });
 
-        Auction_history.hasMany(models.auction_reservation, {
-            foreignKey: 'photo_path',
-            targetKey: 'photo_path'
+        Auction_history.hasMany(models.photo, {
+            foreignKey: 'photo_id'
         });
     };
 
