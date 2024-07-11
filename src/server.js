@@ -3,6 +3,15 @@ const { Server } = require("socket.io");
 const { instrument } = require("@socket.io/admin-ui");
 const express = require("express");
 const app = express();
+const layouts = require("express-ejs-layouts");
+
+
+/* Other modules */
+const cookieParser = require("cookie-parser"),
+    session = require("express-session"),
+    FileStore = require("session-file-store")(session),
+    passport = require("./passport"),
+    morgan = require("morgan");
 
 
 /* Routers */
@@ -21,6 +30,7 @@ db.sequelize.sync().then(() => {
 
 /* Setting app */
 app.set("view engine", "ejs");
+app.use(layouts);
 app.set("views", __dirname + "/views");
 const PORT = process.env.PORT || 3000;
 app.use("/public", express.static(__dirname + "/public"));
@@ -30,6 +40,22 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(morgan('dev'));
+app.use(cookieParser('keyboard cat'));
+
+
+/* Session */
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    store: new FileStore()
+}));
+
+
+/* Passport */
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 /* Routing */

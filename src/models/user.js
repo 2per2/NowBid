@@ -1,3 +1,6 @@
+'use strict';
+const bcrypt = require("bcryptjs");
+
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('user', {
         user_id: {
@@ -21,6 +24,16 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
+
+    User.beforeSave(async (user, options) => {
+        if (user.changed('password')) {
+            user.password = await bcrypt.hash(user.password, 10);
+        }
+    });
+
+    User.prototype.validPassword = async function(password) {
+        return await bcrypt.compare(password, this.password);
+    };
 
     User.associate = function(models) {
         User.belongsTo(models.auction_reservation, {
