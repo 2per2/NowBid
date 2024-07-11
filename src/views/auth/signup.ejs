@@ -44,18 +44,4 @@
 </form>
 
 <!--script for confirming password-->
-<script>
-    document.getElementById('form-signup').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const password = document.getElementById('input-password').value;
-            const repassword = document.getElementById('input-repassword').value;
-            const errorMessage = document.getElementById('error-message');
-
-            if (password !== repassword) {
-                errorMessage.textContent = '비밀번호가 일치하지 않습니다.';
-                return false; // quit form submitting
-            } else {
-                errorMessage.textContent = '';
-            }
-        });
-</script>
+<script src="/public/js/signup.js" defer></script>

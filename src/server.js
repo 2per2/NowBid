@@ -70,6 +70,7 @@ app.use(passport.session());
 /* Routing */
 app.get('/', (req, res) => { res.render('index') });
 app.get('/signup', (req, res) => { res.render('auth/signup') });
+app.post('/signup', (req, res) => { res.status(200).json({ message: '계정 생성 성공' }) });
 
 
 /* Setting http server and socket.io */
