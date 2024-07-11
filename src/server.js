@@ -4,6 +4,7 @@ const { instrument } = require("@socket.io/admin-ui");
 const express = require("express");
 const app = express();
 const layouts = require("express-ejs-layouts");
+require("dotenv").config();
 
 
 /* Other modules */
@@ -41,16 +42,24 @@ app.use(
 );
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cookieParser('keyboard cat'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 
 /* Session */
 app.use(session({
-    secret: 'keyboard cat',
+    store: new FileStore({
+      path: './sessions', // 세션 파일이 저장될 디렉토리
+      secret: process.env.SESSION_SECRET, // 비밀키는 환경변수로 관리하는 것이 좋습니다.
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 2 * 60 * 60 * 1000, // 2시간
+      },
+    }),
+    secret: process.env.SESSION_SECRET, // 비밀키는 환경변수로 관리하는 것이 좋습니다.
     resave: false,
     saveUninitialized: false,
-    store: new FileStore()
-}));
+  }));
 
 
 /* Passport */
