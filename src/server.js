@@ -69,6 +69,7 @@ app.use(passport.session());
 
 /* Routing */
 app.get('/', (req, res) => { res.render('index') });
+app.get('/signup', (req, res) => { res.render('auth/signup') });
 
 
 /* Setting http server and socket.io */

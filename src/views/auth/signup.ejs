@@ -1,0 +1,61 @@
+<h1>Sign up</h1>
+<form id="form-signup" method="post">
+    <table>
+        <tr>
+            <td>
+                <label for="input-username">이름</label>
+            </td>
+            <td>
+                <input type="text" id="input-username" placeholder="이름을 입력" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="input-email">이메일</label>
+            </td>
+            <td>
+                <input type="text" id="input-email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" placeholder="account@example.com" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="input-password">비밀번호</label>
+            </td>
+            <td>
+                <input type="password" id="input-password" placeholder="비밀번호를 입력" required/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="input-repassword">비밀번호 확인</label>
+            </td>
+            <td>
+                <input type="password" id="input-repassword" placeholder="비밀번호를 다시 입력" required/>
+                <span id="error-message" style="color: red;"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" />
+                <input type="reset" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<!--script for confirming password-->
+<script>
+    document.getElementById('form-signup').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const password = document.getElementById('input-password').value;
+            const repassword = document.getElementById('input-repassword').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (password !== repassword) {
+                errorMessage.textContent = '비밀번호가 일치하지 않습니다.';
+                return false; // quit form submitting
+            } else {
+                errorMessage.textContent = '';
+            }
+        });
+</script>
