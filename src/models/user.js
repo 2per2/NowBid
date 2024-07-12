@@ -2,7 +2,7 @@
 const bcrypt = require("bcryptjs");
 
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('user', {
+    const User = sequelize.define('User', {
         user_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -36,15 +36,15 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = function(models) {
-        User.belongsTo(models.auction_reservation, {
+        User.belongsTo(models.Auction_reservation, {
             foreignKey: 'seller_id'
         });
 
-        User.belongsTo(models.auction_history, {
+        User.belongsTo(models.Auction_history, {
             foreignKey: 'seller_id'
         });
 
-        User.belongsTo(models.auction_history, {
+        User.belongsTo(models.Auction_history, {
             foreignKey: 'bidder_id'
         });
     };

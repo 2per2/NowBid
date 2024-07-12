@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Auction_history = sequelize.define('auction_history', {
+    const Auction_history = sequelize.define('Auction_history', {
         history_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -10,15 +10,15 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Auction_history.associate = function(models) {
-        Auction_history.hasMany(models.user, {
+        Auction_history.hasMany(models.User, {
             foreignKey: 'seller_id'
         });
 
-        Auction_history.hasMany(models.user, {
+        Auction_history.hasMany(models.User, {
             foreignKey: 'bidder_id'
         });
 
-        Auction_history.hasMany(models.photo, {
+        Auction_history.hasMany(models.Photo, {
             foreignKey: 'photo_id'
         });
     };

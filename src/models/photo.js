@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Photo = sequelize.define('photo', {
+    const Photo = sequelize.define('Photo', {
         photo_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Photo.associate = function(models) {
-        Photo.belongsTo(models.auction_reservation, {
+        Photo.belongsTo(models.Auction_reservation, {
             foreignKey: 'photo_id'
         });
 
-        Photo.belongsTo(models.auction_history, {
+        Photo.belongsTo(models.Auction_history, {
             foreignKey: 'photo_id'
         });
     };

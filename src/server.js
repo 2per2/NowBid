@@ -16,7 +16,8 @@ const cookieParser = require("cookie-parser"),
 
 
 /* Routers */
-const homeRouter = require("./router/homeRouter");
+const homeRouter = require("./routers/homeRouter"),
+    authRouter = require("./routers/authRouter");
 
 
 /* Initialize sequelize */
@@ -69,8 +70,10 @@ app.use(passport.session());
 
 /* Routing */
 app.get('/', (req, res) => { res.render('index') });
-app.get('/signup', (req, res) => { res.render('auth/signup') });
-app.post('/signup', (req, res) => { res.status(200).json({ message: '계정 생성 성공' }) });
+//app.get('/signup', (req, res) => { res.render('auth/signup') });
+//app.post('/signup', (req, res) => { res.status(200).json({ message: '계정 생성 성공' }) });
+app.get('/signup', authRouter);
+app.post('/signup', authRouter);
 
 
 /* Setting http server and socket.io */
@@ -89,6 +92,13 @@ instrument(io, {
 );
 
 require("./socket")(io);
+
+
+/* Error middleware */
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 
 /* Start server */
