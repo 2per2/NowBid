@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Auction_reservation = sequelize.define('Auction_reservation', {
-        reservation_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true

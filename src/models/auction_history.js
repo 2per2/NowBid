@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Auction_history = sequelize.define('Auction_history', {
-        history_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true

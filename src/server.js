@@ -51,18 +51,15 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 /* Session */
 app.use(session({
     store: new FileStore({
-      path: "../sessions", // 세션 파일이 저장될 디렉토리
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 2 * 60 * 60 * 1000, // 2시간
-      },
+        path: path.join(__dirname, 'sessions'), // 세션 파일이 저장될 디렉토리
     }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-  }));
+    cookie: {
+      maxAge: 2 * 60 * 60 * 1000, // 2시간
+    },
+}));
   app.use(flash());
 
 
