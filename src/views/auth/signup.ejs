@@ -15,6 +15,7 @@
             </td>
             <td>
                 <input type="text" id="input-email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" placeholder="account@example.com" required/>
+                <span id="error-email" style="color: red;"></span>
             </td>
         </tr>
         <tr>
@@ -31,7 +32,7 @@
             </td>
             <td>
                 <input type="password" id="input-repassword" placeholder="비밀번호를 다시 입력" required/>
-                <span id="error-message" style="color: red;"></span>
+                <span id="error-repassword" style="color: red;"></span>
             </td>
         </tr>
         <tr>
@@ -44,4 +45,4 @@
 </form>
 
 <!--script for confirming password-->
-<script src="/public/js/signup.js" defer></script>
+<script src="/js/signup.js" defer></script>

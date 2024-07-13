@@ -6,13 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
             vemail = document.getElementById('input-email').value,
             vpassword = document.getElementById('input-password').value,
             vrepassword = document.getElementById('input-repassword').value,
-            errorMessage = document.getElementById('error-message');
+            error_email = document.getElementById('error-email'),
+            error_pw = document.getElementById('error-repassword');
 
         if (vpassword !== vrepassword) {
-            errorMessage.textContent = '비밀번호가 일치하지 않습니다.';
+            error_pw.textContent = '비밀번호가 일치하지 않습니다.';
             return; // quit form submitting
         } else {
-            errorMessage.textContent = '';
+            error_pw.textContent = '';
             fetch('/signup', {
                 method: 'POST',
                 headers: {
@@ -29,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('successed to create your account');
                     window.location.href = '/';
                 } else {
-                    console.log('failed to create your account');
+                    // if email is already in use
+                    error_email.textContent = "사용 중인 이메일입니다.";
                 }
             })
             .catch(error => {

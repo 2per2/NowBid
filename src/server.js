@@ -4,6 +4,7 @@ const { instrument } = require("@socket.io/admin-ui");
 const express = require("express");
 const app = express();
 const layouts = require("express-ejs-layouts");
+const path = require("path");
 require("dotenv").config();
 
 
@@ -36,7 +37,7 @@ app.set("view engine", "ejs");
 app.use(layouts);
 app.set("views", __dirname + "/views");
 const PORT = process.env.PORT || 3000;
-app.use("/public", express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(
     express.urlencoded({
         extended: false
@@ -50,7 +51,7 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 /* Session */
 app.use(session({
     store: new FileStore({
-      path: './sessions', // 세션 파일이 저장될 디렉토리
+      path: "../sessions", // 세션 파일이 저장될 디렉토리
       secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
@@ -62,7 +63,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
   }));
-  app.use(flash);
+  app.use(flash());
 
 
 /* Passport */

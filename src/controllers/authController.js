@@ -1,31 +1,16 @@
-const db = require("../models");
+const authService = require("../services/authService");
 
-module.exports = {
-    createUser: async (req, res, next) => {
-        try {
-            const { username, email, password } = req.body;
+exports.handleCreateUser = async (req, res, next) => {
+    try {
+        const newUser = req.body;
+        const exUser = await authService.findUserByEmail(newUser.email);
 
-            const usrCnt = await db.User.count({ where: { email: email }});
-            if (usrCnt) {
-                res.send('이메일이 이미 존재');
-            } else {
-                db.User.create({
-                    username: username,
-                    email: email,
-                    password: password
-                });
-            }
-
-            res.send('회원가입 성공');
-        } catch (error) {
-            next(error);
+        if (exUser) {
+            return res.status(409).json({ error: "사용 중인 이메일입니다." });
         }
-    },
-    signin: (req, res, next) => {
-        try {
-            
-        } catch (error) {
-            next(error);
-        }
+        const createdUser = await authService.createUser(newUser);
+        res.status(201).json(createdUser);
+    } catch (error) {
+        next(error);
     }
 };

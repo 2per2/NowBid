@@ -8,7 +8,7 @@ const express = require('express'),
 router.get('/signup', (req, res) => {
     res.render('auth/signup');
 });
-router.post('/signup', authController.createUser);
+router.post('/signup', authController.handleCreateUser);
 
 
 /* Sign in */
