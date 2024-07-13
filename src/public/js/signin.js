@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             vemail = document.getElementById('input-email').value,
             vpassword = document.getElementById('input-password').value;
 
-            fetch('/signup', {
+            fetch('/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(response => {
                 if (response.ok) {
-                    console.log('successed to create your account');
+                    console.log('successed to sign in your account');
                     window.location.href = '/';
                 } else {
-                    console.log('failed to create your account');
+                    console.log('failed to sign in your account');
                 }
             })
             .catch(error => {
-                console.error('Error occured for creating your account', error);
+                console.error('Error occured for sign in', error);
             });
     });
 });

@@ -12,6 +12,7 @@ const cookieParser = require("cookie-parser"),
     session = require("express-session"),
     FileStore = require("session-file-store")(session),
     passport = require("./passport"),
+    flash = require("express-flash"),
     morgan = require("morgan");
 
 
@@ -61,6 +62,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
   }));
+  app.use(flash);
 
 
 /* Passport */
@@ -82,6 +84,7 @@ app.get('/signup', authRouter);
 app.post('/signup', authRouter);
 app.get('/signin', authRouter);
 app.post('/signin', authRouter);
+
 
 /* Setting http server and socket.io */
 const httpServer = http.createServer(app);

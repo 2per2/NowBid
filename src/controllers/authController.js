@@ -1,5 +1,4 @@
-const db = require("../models"),
-    passport = require("passport");
+const db = require("../models");
 
 module.exports = {
     createUser: async (req, res, next) => {
@@ -24,12 +23,7 @@ module.exports = {
     },
     signin: (req, res, next) => {
         try {
-            passport.authenticate('local', {
-                failureRedirect: '/signin',
-                failureFlash: 'Failed to sign in',
-                successRedirect: '/',
-                successFlash: 'welcome'
-            });
+            
         } catch (error) {
             next(error);
         }
