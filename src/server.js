@@ -50,14 +50,14 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(session({
     store: new FileStore({
       path: './sessions', // 세션 파일이 저장될 디렉토리
-      secret: process.env.SESSION_SECRET, // 비밀키는 환경변수로 관리하는 것이 좋습니다.
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
         maxAge: 2 * 60 * 60 * 1000, // 2시간
       },
     }),
-    secret: process.env.SESSION_SECRET, // 비밀키는 환경변수로 관리하는 것이 좋습니다.
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   }));
@@ -68,13 +68,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+/* Initialize local variables */
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    next();
+});
+
+
 /* Routing */
 app.get('/', (req, res) => { res.render('index') });
-//app.get('/signup', (req, res) => { res.render('auth/signup') });
-//app.post('/signup', (req, res) => { res.status(200).json({ message: '계정 생성 성공' }) });
 app.get('/signup', authRouter);
 app.post('/signup', authRouter);
-
+app.get('/signin', authRouter);
+app.post('/signin', authRouter);
 
 /* Setting http server and socket.io */
 const httpServer = http.createServer(app);

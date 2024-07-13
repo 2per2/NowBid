@@ -4,14 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const vusername = document.getElementById('input-username').value,
             vemail = document.getElementById('input-email').value,
-            vpassword = document.getElementById('input-password').value,
-            errorMessage = document.getElementById('error-message');
+            vpassword = document.getElementById('input-password').value;
 
-        if (vpassword !== vrepassword) {
-            errorMessage.textContent = '비밀번호가 일치하지 않습니다.';
-            return; // quit form submitting
-        } else {
-            errorMessage.textContent = '';
             fetch('/signup', {
                 method: 'POST',
                 headers: {
@@ -34,6 +28,5 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error('Error occured for creating your account', error);
             });
-        }
     });
 });
