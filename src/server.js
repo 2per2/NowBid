@@ -19,7 +19,8 @@ const cookieParser = require("cookie-parser"),
 
 /* Routers */
 const homeRouter = require("./routers/homeRouter"),
-    authRouter = require("./routers/authRouter");
+    authRouter = require("./routers/authRouter"),
+    reservationRouter = require("./routers/reservationRouter");
 
 
 /* Initialize sequelize */
@@ -60,7 +61,7 @@ app.use(session({
       maxAge: 2 * 60 * 60 * 1000, // 2시간
     },
 }));
-  app.use(flash());
+app.use(flash());
 
 
 /* Passport */
@@ -82,6 +83,9 @@ app.get('/signup', authRouter);
 app.post('/signup', authRouter);
 app.get('/signin', authRouter);
 app.post('/signin', authRouter);
+app.get('/reservation', reservationRouter);
+app.get('/reservation/*', reservationRouter);
+app.post('/reservation/upload', reservationRouter);
 
 
 /* Setting http server and socket.io */
