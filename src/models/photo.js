@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Photo.associate = function(models) {
-        Photo.belongsTo(models.Auction_reservation, {
+        Photo.belongsTo(models.Reservation, {
             foreignKey: 'photo_id'
         });
 
-        Photo.belongsTo(models.Auction_history, {
+        Photo.belongsTo(models.History, {
             foreignKey: 'photo_id'
         });
     };

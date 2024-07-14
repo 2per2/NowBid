@@ -36,15 +36,15 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = function(models) {
-        User.belongsTo(models.Auction_reservation, {
+        User.belongsTo(models.Reservation, {
             foreignKey: 'seller_id'
         });
 
-        User.belongsTo(models.Auction_history, {
+        User.belongsTo(models.History, {
             foreignKey: 'seller_id'
         });
 
-        User.belongsTo(models.Auction_history, {
+        User.belongsTo(models.History, {
             foreignKey: 'bidder_id'
         });
     };

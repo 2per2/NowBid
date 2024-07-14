@@ -25,7 +25,7 @@ const homeRouter = require("./routers/homeRouter"),
 /* Initialize sequelize */
 const db = require('./models');
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({force: true}).then(() => {
 	console.log('Database synchronized successfully');
 }).catch(error => {
 	console.log('Database synchronized failed', error);

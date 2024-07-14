@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Auction_reservation = sequelize.define('Auction_reservation', {
+    const Reservation = sequelize.define('Reservation', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -12,19 +12,25 @@ module.exports = (sequelize, DataTypes) => {
         photo_path: {
             type: DataTypes.STRING(255)
         },
+        status: {
+            type: DataTypes.ENUM,
+            values: ['reserved', 'ongoing', 'completed', 'cancelled'],
+            allowNull: false,
+            defaultValue: 'reserved'
+        }
     }, {
         timestamps: true
     });
 
-    Auction_reservation.associate = function(models) {
-        Auction_reservation.hasMany(models.User, {
+    Reservation.associate = function(models) {
+        Reservation.hasMany(models.User, {
             foreignKey: 'seller_id'
         });
 
-        Auction_reservation.hasMany(models.Photo, {
+        Reservation.hasMany(models.Photo, {
             foreignKey: 'photo_id'
         });
     };
 
-    return Auction_reservation;
+    return Reservation;
 }
