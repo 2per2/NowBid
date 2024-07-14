@@ -24,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'reserved'
         },
         photo_id: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Users',
+                model: 'Photos',
                 key: 'id'
             }
         },

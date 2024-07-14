@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         photo_id: {
-            type: DataTypes.STRING(255),
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Users',
+                model: 'Photos',
                 key: 'id'
             }
         },
