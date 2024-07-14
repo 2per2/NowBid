@@ -14,6 +14,7 @@ const cookieParser = require("cookie-parser"),
     FileStore = require("session-file-store")(session),
     passport = require("./passport"),
     flash = require("express-flash"),
+    multer = require("multer"),
     morgan = require("morgan");
 
 
@@ -47,6 +48,20 @@ app.use(
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser(process.env.SESSION_SECRET));
+
+
+/* Multer setting */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'files/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+// 업로드 설정
+const upload = multer({ storage: storage });
 
 
 /* Session */
@@ -86,6 +101,13 @@ app.post('/signin', authRouter);
 app.get('/reservation', reservationRouter);
 app.get('/reservation/*', reservationRouter);
 app.post('/reservation/upload', reservationRouter);
+app.get('/upload', (req, res) => {
+	res.sendFile(path.join(__dirname, 'multipart.html'));
+});
+app.post('/upload', upload.single('photo'), (req, res) => {
+    console.log(req.file, req.body);
+    res.send('ok');
+});
 
 
 /* Setting http server and socket.io */
