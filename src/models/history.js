@@ -4,7 +4,31 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
-        }
+        },
+        seller_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id'
+            }
+        },
+        bidder_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id'
+            }
+        },
+        photo_id: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id'
+            }
+        },
     }, {
         timestamps: true
     });
