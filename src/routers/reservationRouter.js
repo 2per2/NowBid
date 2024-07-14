@@ -1,9 +1,8 @@
 const express = require('express'),
-	router = express.Router();
+	router = express.Router(),
+    reservationController = require("../controllers/reservationController")
 
-router.get('/reservation', (req, res) => {
-    res.render("reservations/reservation");
-});
+router.get('/reservation', reservationController.handleGetReservation);
 router.get('/reservation/upload', (req, res) => {
     res.render("reservations/createReservation");
 });
