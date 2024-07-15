@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
+        name: {
+            type: DataTypes.STRING(255),
+        },
+        description: {
+            type: DataTypes.STRING(255)
+        },
         start_time: {
             type: DataTypes.TIME,
             allowNull: false

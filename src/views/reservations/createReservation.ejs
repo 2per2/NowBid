@@ -4,28 +4,26 @@
         <table>
             <tr>
                 <td>
-                    <label for="input-email">이메일</label>
+                    <label for="input-name">제목</label>
                 </td>
                 <td>
-                    <input type="text" id="input-email" />
-                    <span id="error-email" style="color: red;"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="input-password">비밀번호</label>
-                </td>
-                <td>
-                    <input type="password" id="input-password" placeholder="비밀번호를 입력" required/>
+                    <input type="text" id="input-name" placeholder="경매 물품을 입력" required/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="input-repassword">비밀번호 확인</label>
+                    <label for="input-description">설명</label>
                 </td>
                 <td>
-                    <input type="password" id="input-repassword" placeholder="비밀번호를 다시 입력" required/>
-                    <span id="error-repassword" style="color: red;"></span>
+                    <textarea type="text" id="input-description" placeholder="경매 물품 설명 입력"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="input-startTime">시작 시간</label>
+                </td>
+                <td>
+                    <input type="datetime-local" id="input-startTime" name="startTime" required>
                 </td>
             </tr>
             <tr>
@@ -40,10 +38,12 @@
     <h1>Please Sign in</h1>
 <% } %>
 
+<%= currentUser.id %>
+
 <script>
     // 서버 측 변수를 클라이언트 측 스크립트에서 사용
-    const userId = '<%= currentUser.id %>';
-    window.userId = userId;
+    //const userId = '<%= currentUser.id %>';
+    //window.userId = userId;
 </script>
 
 <!--script for confirming password-->
