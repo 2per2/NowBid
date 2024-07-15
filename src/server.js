@@ -53,10 +53,11 @@ app.use(cookieParser(process.env.SESSION_SECRET));
 /* Multer setting */
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'files/');
+        cb(null, process.env.STORAGE_PATH);
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname);
+        //cb(null, Date.now() + '-' + file.originalname);
+        cb(null, file.originalname);
     }
 });
 
