@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("form-signup").addEventListener('submit', (event) => {
+    document.getElementById("form-signin").addEventListener('submit', (event) => {
         event.preventDefault();
 
         const vusername = document.getElementById('input-username').value,
             vemail = document.getElementById('input-email').value,
             vpassword = document.getElementById('input-password').value,
-            vrepassword = document.getElementById('input-repassword').value,
             errorMessage = document.getElementById('error-message');
 
         if (vpassword !== vrepassword) {

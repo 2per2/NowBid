@@ -6,11 +6,17 @@
     <title>NowBid</title>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/public/js/app.js"></script>
+    <script src="/js/app.js"></script>
+
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
+    <%- include("partials/header") %>
+
     <main>
         <%- body %>
     </main>
+
+    <%- include("partials/footer") %>
 </body>
 </html>

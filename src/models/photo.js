@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
     const Photo = sequelize.define('Photo', {
-        photo_id: {
+        id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        photo_path: {
+        path: {
             type: DataTypes.STRING(255),
             allowNull: false
         },
@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Photo.associate = function(models) {
-        Photo.belongsTo(models.Auction_reservation, {
+        Photo.belongsTo(models.Reservation, {
             foreignKey: 'photo_id'
         });
 
-        Photo.belongsTo(models.Auction_history, {
+        Photo.belongsTo(models.History, {
             foreignKey: 'photo_id'
         });
     };

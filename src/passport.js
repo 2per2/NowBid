@@ -21,13 +21,13 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user.id); // 사용자 ID만 세션에 저장
 });
 
 passport.deserializeUser(async function(id, done) {
   try {
-    const user = await db.User.findByPk(id);
-    done(null, user);
+    const user = await db.User.findByPk(id); // ID로 사용자 조회
+    done(null, user); // 복원된 사용자 객체를 전달
   } catch (err) {
     done(err);
   }

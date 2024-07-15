@@ -4,6 +4,7 @@ const { instrument } = require("@socket.io/admin-ui");
 const express = require("express");
 const app = express();
 const layouts = require("express-ejs-layouts");
+const path = require("path");
 require("dotenv").config();
 
 
@@ -12,12 +13,15 @@ const cookieParser = require("cookie-parser"),
     session = require("express-session"),
     FileStore = require("session-file-store")(session),
     passport = require("./passport"),
+    flash = require("express-flash"),
+    multer = require("multer"),
     morgan = require("morgan");
 
 
 /* Routers */
 const homeRouter = require("./routers/homeRouter"),
-    authRouter = require("./routers/authRouter");
+    authRouter = require("./routers/authRouter"),
+    reservationRouter = require("./routers/reservationRouter");
 
 
 /* Initialize sequelize */
@@ -35,7 +39,7 @@ app.set("view engine", "ejs");
 app.use(layouts);
 app.set("views", __dirname + "/views");
 const PORT = process.env.PORT || 3000;
-app.use("/public", express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(
     express.urlencoded({
         extended: false
@@ -46,21 +50,33 @@ app.use(morgan('dev'));
 app.use(cookieParser(process.env.SESSION_SECRET));
 
 
+/* Multer setting */
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'files/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+
+// 업로드 설정
+const upload = multer({ storage: storage });
+
+
 /* Session */
 app.use(session({
     store: new FileStore({
-      path: './sessions', // 세션 파일이 저장될 디렉토리
-      secret: process.env.SESSION_SECRET, // 비밀키는 환경변수로 관리하는 것이 좋습니다.
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        maxAge: 2 * 60 * 60 * 1000, // 2시간
-      },
+        path: path.join(__dirname, 'sessions'), // 세션 파일이 저장될 디렉토리
     }),
-    secret: process.env.SESSION_SECRET, // 비밀키는 환경변수로 관리하는 것이 좋습니다.
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-  }));
+    cookie: {
+      maxAge: 2 * 60 * 60 * 1000, // 2시간
+    },
+}));
+app.use(flash());
 
 
 /* Passport */
@@ -68,12 +84,30 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+/* Initialize local variables */
+app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.isAuthenticated();
+    res.locals.currentUser = req.user;
+    next();
+});
+
+
 /* Routing */
 app.get('/', (req, res) => { res.render('index') });
-//app.get('/signup', (req, res) => { res.render('auth/signup') });
-//app.post('/signup', (req, res) => { res.status(200).json({ message: '계정 생성 성공' }) });
 app.get('/signup', authRouter);
 app.post('/signup', authRouter);
+app.get('/signin', authRouter);
+app.post('/signin', authRouter);
+app.get('/reservation', reservationRouter);
+app.get('/reservation/*', reservationRouter);
+app.post('/reservation/upload', reservationRouter);
+app.get('/upload', (req, res) => {
+	res.sendFile(path.join(__dirname, 'multipart.html'));
+});
+app.post('/upload', upload.single('photo'), (req, res) => {
+    console.log(req.file, req.body);
+    res.send('ok');
+});
 
 
 /* Setting http server and socket.io */
