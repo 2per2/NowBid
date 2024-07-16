@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("form-reservation").addEventListener('submit', (event) => {
         event.preventDefault();
         console.log(window.userId);
-            
+        /*
         fetch('/signup', {
             method: 'POST',
             headers: {
@@ -25,6 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error occured for creating your account', error);
-        });
+        });*/
     });
 });
