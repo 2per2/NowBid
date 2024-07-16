@@ -1,17 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("form-reservation").addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log(window.userId);
-        /*
-        fetch('/signup', {
+        //console.log(window.userId);
+
+        const name = document.getElementById('input-name'),
+            description = document.getElementById('input-description'),
+            startTime = document.getElementById('input-startTime');
+        
+        fetch('/reservation/upload', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: vusername,
-                email: vemail,
-                password: vpassword
+    
             })
         })
         .then(response => {
@@ -20,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = '/';
             } else {
                 // if email is already in use
-                error_email.textContent = "사용 중인 이메일입니다.";
+                
             }
         })
         .catch(error => {
             console.error('Error occured for creating your account', error);
-        });*/
+        });
     });
 });
