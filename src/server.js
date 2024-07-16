@@ -86,17 +86,7 @@ app.get('/signin', authRouter);
 app.post('/signin', authRouter);
 app.get('/reservation', reservationRouter);
 app.get('/reservation/*', reservationRouter);
-app.post('/reservation/new', reservationRouter);
-app.post('/reservation/upload', reservationRouter);
-app.get('/reservation/upload', reservationRouter);
-
-app.get('/upload', (req, res) => {
-	res.sendFile(path.join(__dirname, 'multipart.html'));
-});
-app.post('/upload', upload.single('photo'), (req, res) => {
-    console.log(req.file, req.body);
-    res.send('ok');
-});
+app.post('/reservation/*', reservationRouter);
 
 
 /* Setting http server and socket.io */

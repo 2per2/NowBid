@@ -8,11 +8,9 @@ router.get('/reservation', reservationController.handleGetReservation);
 router.get('/reservation/new', isAuthenticated, (req, res) => {
     res.render("reservations/createReservation");
 });
-router.get('/reservation/upload', (req, res) => {
-    res.sendFile(path.join(__dirname, 'multipart.html'));
-});
-router.post('/reservation/upload', upload.single('photo'), (req, res) => {
-    console.log(req.file, req.body);
+router.post('/reservation/new', upload.single('photo'), (req, res) => {
+    const { name, description, startTime } = req.body;
+    console.log(name, description, startTime);
     res.send('ok');
 });
 

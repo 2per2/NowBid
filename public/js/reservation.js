@@ -1,25 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("form-reservation").addEventListener('submit', (event) => {
         event.preventDefault();
-        //console.log(window.userId);
-
-        const name = document.getElementById('input-name'),
-            description = document.getElementById('input-description'),
-            startTime = document.getElementById('input-startTime');
         
-        fetch('/reservation/upload', {
+        const vname = document.getElementById('input-name'),
+            vdescription = document.getElementById('input-description'),
+            vstartTime = document.getElementById('input-startTime');
+        
+        fetch('/reservation/new', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-    
+                name: vname,
+                description: vdescription,
+                startTime: vstartTime
             })
         })
         .then(response => {
             if (response.ok) {
                 console.log('successed to create your account');
-                window.location.href = '/';
+                //window.location.href = '/';
             } else {
                 // if email is already in use
                 
