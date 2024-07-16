@@ -50,21 +50,6 @@ app.use(morgan('dev'));
 app.use(cookieParser(process.env.SESSION_SECRET));
 
 
-/* Multer setting */
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, process.env.STORAGE_PATH);
-    },
-    filename: (req, file, cb) => {
-        //cb(null, Date.now() + '-' + file.originalname);
-        cb(null, file.originalname);
-    }
-});
-
-// 업로드 설정
-const upload = multer({ storage: storage });
-
-
 /* Session */
 app.use(session({
     store: new FileStore({
