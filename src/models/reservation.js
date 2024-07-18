@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
-        name: {
+        title: {
             type: DataTypes.STRING(255),
         },
         description: {

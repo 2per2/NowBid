@@ -4,14 +4,14 @@ exports.findReservationByUser = async (username) => {
     return await db.Reservation.findAll({ where: { username: username }});
 };
 
-exports.createReservation = async (newPhoto, newReservation) => {
+exports.createReservation = async (newPhoto, currentUser, newReservation) => {
     try {
         const photo = await db.Photo.create({
-
+            path: newPhoto.path
         });
         const reservation = await db.Reservation.create({
-            username: newUser.username,
-            email: newUser.email,
+            seller_id: currentUser.id,
+            title: newReservation.title,
             password: newUser.password
         });
         return user;
