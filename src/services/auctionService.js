@@ -4,19 +4,31 @@ exports.findReservationByUser = async (username) => {
     return await db.Reservation.findAll({ where: { username: username }});
 };
 
-exports.createReservation = async (newPhoto, currentUser, newReservation) => {
+exports.createPhoto = async (newPhoto) => {
     try {
         const photo = await db.Photo.create({
             path: newPhoto.path
         });
+        return photo;
+    } catch (error) {
+        throw new Error('사진 생성에 실패했습니다: ' + error.message);
+    }
+};
+
+exports.createReservation = async (currentUser, newReservation, photo) => {
+    try {
+        console.log(newReservation.start_time);
         const reservation = await db.Reservation.create({
             seller_id: currentUser.id,
             title: newReservation.title,
-            password: newUser.password
+            description: newReservation.description,
+            start_time: newReservation.startTime,
+            status: 'reserved',
+            photo_id: photo.id
         });
-        return user;
+        return reservation;
     } catch (error) {
-        throw new Error('사용자 생성에 실패했습니다: ' + error.message);
+        throw new Error('예약 생성에 실패했습니다: ' + error.message);
     }
 };
 
