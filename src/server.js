@@ -84,6 +84,8 @@ app.get('/signup', authRouter);
 app.post('/signup', authRouter);
 app.get('/signin', authRouter);
 app.post('/signin', authRouter);
+app.get('/signup/*', authRouter);
+app.get('/signin/*', authRouter);
 app.get('/reservation', reservationRouter);
 app.get('/reservation/*', reservationRouter);
 app.post('/reservation/*', reservationRouter);

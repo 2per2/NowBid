@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const google = require("./googleStrategy");
 const db = require('../models');
 
 passport.use(new LocalStrategy(
@@ -32,5 +33,7 @@ passport.deserializeUser(async function(id, done) {
     done(err);
   }
 });
+
+require('./googleStrategy');
 
 module.exports = passport;
