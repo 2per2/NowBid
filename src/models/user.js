@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         username: {
             type: DataTypes.STRING(10),
-            allowNull: false
+            defaultValue: 'anonymous'
         },
         email: {
             type: DataTypes.STRING(255),
@@ -18,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         password: {
-            type: DataTypes.STRING(255),
-            allowNull: false
+            type: DataTypes.STRING(255)
         },
         google_id: {
             type: DataTypes.STRING(255)
