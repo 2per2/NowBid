@@ -42,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Reservation.associate = function(models) {
-        Reservation.hasMany(models.User, {
+        Reservation.belongsTo(models.User, {
             foreignKey: 'seller_id'
         });
 
-        Reservation.hasMany(models.Photo, {
+        Reservation.belongsTo(models.Photo, {
             foreignKey: 'photo_id'
         });
     };

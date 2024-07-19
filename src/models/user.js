@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
             allowNull: false
         },
+        google_id: {
+            type: DataTypes.STRING(255)
+        },
     }, {
         timestamps: true
     });
@@ -36,15 +39,15 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = function(models) {
-        User.belongsTo(models.Reservation, {
+        User.hasMany(models.Reservation, {
             foreignKey: 'seller_id'
         });
 
-        User.belongsTo(models.History, {
+        User.hasMany(models.History, {
             foreignKey: 'seller_id'
         });
 
-        User.belongsTo(models.History, {
+        User.hasMany(models.History, {
             foreignKey: 'bidder_id'
         });
     };

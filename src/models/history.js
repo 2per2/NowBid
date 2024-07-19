@@ -34,15 +34,15 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     History.associate = function(models) {
-        History.hasMany(models.User, {
+        History.belongsTo(models.User, {
             foreignKey: 'seller_id'
         });
 
-        History.hasMany(models.User, {
+        History.belongsTo(models.User, {
             foreignKey: 'bidder_id'
         });
 
-        History.hasMany(models.Photo, {
+        History.belongsTo(models.Photo, {
             foreignKey: 'photo_id'
         });
     };
