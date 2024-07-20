@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Reservation = sequelize.define('Reservation', {
+    const auction = sequelize.define('Auction', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -41,15 +41,15 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true
     });
 
-    Reservation.associate = function(models) {
-        Reservation.belongsTo(models.User, {
+    auction.associate = function(models) {
+        auction.belongsTo(models.User, {
             foreignKey: 'seller_id'
         });
 
-        Reservation.belongsTo(models.Photo, {
+        auction.belongsTo(models.Photo, {
             foreignKey: 'photo_id'
         });
     };
 
-    return Reservation;
+    return auction;
 }

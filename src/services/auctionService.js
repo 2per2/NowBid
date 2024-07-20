@@ -1,7 +1,7 @@
 const db = require("../models");
 
-exports.findReservationByUser = async (username) => {
-    return await db.Reservation.findAll({ where: { username: username }});
+exports.findAuctionByUser = async (id) => {
+    return await db.Auction.findAll({ where: { seller_id: id }});
 };
 
 exports.createPhoto = async (newPhoto) => {
@@ -17,7 +17,7 @@ exports.createPhoto = async (newPhoto) => {
 
 exports.createReservation = async (currentUser, newReservation, photo) => {
     try {
-        const reservation = await db.Reservation.create({
+        const reservation = await db.Auction.create({
             seller_id: currentUser.id,
             title: newReservation.title,
             description: newReservation.description,
@@ -35,11 +35,14 @@ exports.getReservations = async (page = 1, limit = 10) => {
     try {
         const offset = (page - 1) * limit; // 이미 불러온 데이터는 건너뛰기
 
-        const reservations = await db.Reservation.findAndCountAll({
+        const reservations = await db.Auction.findAndCountAll({
+            where: {
+              status: 'reserved'
+            },
             limit: limit,
             offset: offset,
             order: [['start_time', 'ASC']]
-        });
+          });
 
         return {
             total: reservations.count,

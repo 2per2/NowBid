@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("form-reservation").addEventListener('submit', (event) => {
+    document.getElementById("form-auction").addEventListener('submit', (event) => {
         event.preventDefault();
         
         const vname = document.getElementById('input-name'),
             vdescription = document.getElementById('input-description'),
             vstartTime = document.getElementById('input-startTime');
         
-        fetch('/reservation/new', {
+        fetch('/auction/new', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

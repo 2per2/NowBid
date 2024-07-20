@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Photo.associate = function(models) {
-        Photo.hasOne(models.Reservation, {
+        Photo.hasOne(models.Auction, {
             foreignKey: 'photo_id'
         });
 

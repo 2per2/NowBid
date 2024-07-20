@@ -1,11 +1,11 @@
-const reservationService = require("../services/auctionService");
+const auctionService = require("../services/auctionService");
 
 exports.handleGetAllReservations = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page, 10) || 1; // 기본값은 1
         const limit = parseInt(req.query.limit, 10) || 10; // 페이지당 항목 수, 기본값은 10
 
-        const reservations = await reservationService.getReservations(page, limit);
+        const reservations = await auctionService.getReservations(page, limit);
 
         res.send(reservations);
     } catch (error) {
@@ -32,17 +32,17 @@ exports.handleCreateReservation = async (req, res, next) => {
         // startTime을 적절한 형식으로 변환
         const formattedTime = formatTime(startTime);
 
-        // newReservation 객체를 생성할 때 formattedTime을 사용
+        // newreservation 객체를 생성할 때 formattedTime을 사용
         const newReservation = { title, description, startTime: formattedTime };
 
         // 파일과 예약 데이터 생성
-        const photoData = await reservationService.createPhoto(newPhoto);
-        const reservationData = await reservationService.createReservation(currentUser, newReservation, photoData);
+        const photoData = await auctionService.createPhoto(newPhoto);
+        const reservationData = await auctionService.createReservation(currentUser, newReservation, photoData);
 
         // 성공적인 응답 코드와 데이터 반환
         res.status(201).json({ success: 'success', reservationData });
     } catch (error) {
-        console.error('Error in handleCreateReservation:', error);
+        console.error('Error in handleCreatereservation:', error);
         res.status(500).json({ message: 'Error creating reservation', error: error.message });
     }
 };
