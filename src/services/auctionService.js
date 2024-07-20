@@ -17,7 +17,6 @@ exports.createPhoto = async (newPhoto) => {
 
 exports.createReservation = async (currentUser, newReservation, photo) => {
     try {
-        console.log(newReservation.start_time);
         const reservation = await db.Reservation.create({
             seller_id: currentUser.id,
             title: newReservation.title,
