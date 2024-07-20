@@ -5,17 +5,16 @@ exports.handleGetReservation = async (req, res, next) => {
         const page = parseInt(req.query.page, 10) || 1; // 기본값은 1
         const limit = parseInt(req.query.limit, 10) || 10; // 페이지당 항목 수, 기본값은 10
 
-        const data = await reservationService.getReservations(page, limit);
+        const reservations = await reservationService.getReservations(page, limit);
 
-        res.send(data);
+        res.send(reservations);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching reservations', error: error.message });
     }
 };
 
 exports.handleCreateReservation = async (req, res, next) => {
-    // 시간만 추출하여 'HH:MM:SS' 형식으로 변환하는 함수
-    function formatTime(startTime) {
+    function formatTime(startTime) { // 시간만 추출하여 'HH:MM:SS' 형식으로 변환하는 함수
         const startDateTime = new Date(startTime);
 
         // 시간을 'HH:MM:SS' 형식으로 변환
