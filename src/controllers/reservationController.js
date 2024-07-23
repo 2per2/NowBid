@@ -46,3 +46,15 @@ exports.handleCreateReservation = async (req, res, next) => {
         res.status(500).json({ message: 'Error creating reservation', error: error.message });
     }
 };
+
+exports.handleGetOneReservation = async (req, res, next) => {
+    try {
+        const reservationId = req.params.id;
+        const reservationData = await auctionService.getOneReservation(reservationId);
+
+        res.status(201).json({ success: 'success', reservationData });
+    } catch (error) {
+        console.error('Error in handleCreatereservation:', error);
+        res.status(500).json({ message: 'Error getting reservation', error: error.message });
+    }
+};
