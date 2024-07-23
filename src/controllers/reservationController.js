@@ -51,8 +51,12 @@ exports.handleGetOneReservation = async (req, res, next) => {
     try {
         const reservationId = req.params.id;
         const reservationData = await auctionService.getOneReservation(reservationId);
+        if (!reservationData) {
+            throw new Error('No reservation data found');
+        }
 
-        res.status(201).json({ success: 'success', reservationData });
+        //res.status(201).json({ success: 'success', reservationData });
+        res.render("reservations/reservationDetail", { data: reservationData });
     } catch (error) {
         console.error('Error in handleCreatereservation:', error);
         res.status(500).json({ message: 'Error getting reservation', error: error.message });

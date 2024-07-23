@@ -58,7 +58,7 @@ exports.getReservations = async (page = 1, limit = 10) => {
 
 exports.getOneReservation = async (reservation_id) => {
     try {
-        const reservation = await db.Auction.findAll({
+        const reservation = await db.Auction.findOne({
             where: {
                 id: reservation_id
             }
