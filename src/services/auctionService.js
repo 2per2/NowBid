@@ -1,7 +1,7 @@
 const db = require("../models");
 
-exports.findAuctionByUser = async (id) => {
-    return await db.Auction.findAll({ where: { seller_id: id }});
+exports.findAuctionByUser = async (user_id) => {
+    return await db.Auction.findAll({ where: { seller_id: user_id }});
 };
 
 exports.createPhoto = async (newPhoto) => {
@@ -51,6 +51,20 @@ exports.getReservations = async (page = 1, limit = 10) => {
             reservations: reservations.rows
         };
 
+    } catch (error) {
+        throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
+    }
+};
+
+exports.getOneReservation = async (reservation_id) => {
+    try {
+        const reservation = await db.Auction.find({
+            where: {
+                id: reservation_id
+            }
+        });
+
+        return reservation;
     } catch (error) {
         throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
     }
