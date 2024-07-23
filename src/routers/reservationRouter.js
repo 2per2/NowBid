@@ -9,5 +9,6 @@ router.get('/reservation/new', isAuthenticated, (req, res) => {
     res.render("reservations/createReservation");
 });
 router.post('/reservation/new', upload.single('photo'), reservationController.handleCreateReservation);
+router.get('/reservation/:id', reservationController.handleGetOneReservation);
 
 module.exports = router;
