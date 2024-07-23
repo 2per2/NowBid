@@ -63,6 +63,7 @@ exports.handleGetOneReservation = async (req, res, next) => {
         }
 
         //res.status(201).json({ success: 'success', reservationData });
+        console.log(reservationData.Photo.path);
         res.render("reservations/reservationDetail", { data: reservationData });
     } catch (error) {
         console.error('Error in handleCreatereservation:', error);

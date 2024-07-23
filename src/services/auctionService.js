@@ -59,9 +59,12 @@ exports.getReservations = async (page = 1, limit = 10) => {
 exports.getOneReservation = async (reservation_id) => {
     try {
         const reservation = await db.Auction.findOne({
-            where: {
-                id: reservation_id
-            }
+            where: { id: reservation_id },
+            include: [{
+                // photo_id를 통해 path도 가져오기
+                model: db.Photo,
+                attributes: ['path']
+            }]
         });
 
         return reservation;
