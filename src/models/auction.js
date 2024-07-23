@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255)
         },
         start_time: {
-            type: DataTypes.TIME,
+            type: DataTypes.DATE,
             allowNull: false
         },
         status: {
