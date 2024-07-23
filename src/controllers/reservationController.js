@@ -14,15 +14,22 @@ exports.handleGetAllReservations = async (req, res, next) => {
 };
 
 exports.handleCreateReservation = async (req, res, next) => {
-    function formatTime(startTime) { // 시간만 추출하여 'HH:MM:SS' 형식으로 변환하는 함수
+    function formatDateTime(startTime) {
         const startDateTime = new Date(startTime);
-
+    
+        // 날짜를 'YYYY-MM-DD' 형식으로 변환
+        const year = startDateTime.getUTCFullYear();
+        const month = String(startDateTime.getUTCMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+        const day = String(startDateTime.getUTCDate()).padStart(2, '0');
+    
         // 시간을 'HH:MM:SS' 형식으로 변환
         const hours = String(startDateTime.getUTCHours()).padStart(2, '0');
         const minutes = String(startDateTime.getUTCMinutes()).padStart(2, '0');
         const seconds = String(startDateTime.getUTCSeconds()).padStart(2, '0');
-        return `${hours}:${minutes}:${seconds}`;
+    
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
+    
 
     try {
         const currentUser = req.user;
@@ -30,7 +37,7 @@ exports.handleCreateReservation = async (req, res, next) => {
         const { title, description, startTime } = req.body;
 
         // startTime을 적절한 형식으로 변환
-        const formattedTime = formatTime(startTime);
+        const formattedTime = formatDateTime(startTime);
 
         // newreservation 객체를 생성할 때 formattedTime을 사용
         const newReservation = { title, description, startTime: formattedTime };
