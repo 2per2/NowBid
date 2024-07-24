@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         status: {
             type: DataTypes.ENUM,
             values: ['reserved', 'ongoing', 'completed', 'cancelled'],
-            allowNull: false,
             defaultValue: 'reserved'
         },
         photo_id: {

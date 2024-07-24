@@ -24,7 +24,17 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255)
         },
     }, {
-        timestamps: true
+        timestamps: true,
+        hooks: {
+            afterCreate() { async (user) => {
+                    try {
+                        await user.createWallet();
+                    } catch (error) {
+                        console.error('Error creating wallet:', error);
+                    }
+                }
+            }
+        }
     });
 
     User.beforeSave(async (user, options) => {
@@ -48,6 +58,10 @@ module.exports = (sequelize, DataTypes) => {
 
         User.hasMany(models.History, {
             foreignKey: 'bidder_id'
+        });
+
+        User.hasOne(models.Wallet, {
+            foreignKey: 'user_id'
         });
     };
 
