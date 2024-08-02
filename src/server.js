@@ -21,7 +21,8 @@ const cookieParser = require("cookie-parser"),
 /* Routers */
 const homeRouter = require("./routers/homeRouter"),
     authRouter = require("./routers/authRouter"),
-    reservationRouter = require("./routers/reservationRouter");
+    reservationRouter = require("./routers/reservationRouter"),
+    auctionRouter = require("./routers/auctionRouter");
 
 
 /* Initialize sequelize */
@@ -91,6 +92,8 @@ app.get('/signin/*', authRouter);
 app.get('/reservation', reservationRouter);
 app.get('/reservation/*', reservationRouter);
 app.post('/reservation/*', reservationRouter);
+app.get('/auction', auctionRouter);
+app.get('/auction/*', auctionRouter);
 
 
 /* Setting http server and socket.io */
