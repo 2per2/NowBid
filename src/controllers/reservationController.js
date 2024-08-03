@@ -5,7 +5,7 @@ exports.handleGetAllReservations = async (req, res, next) => {
         const page = parseInt(req.query.page, 10) || 1; // 기본값은 1
         const limit = parseInt(req.query.limit, 10) || 10; // 페이지당 항목 수, 기본값은 10
 
-        const reservations = await auctionService.getReservations(page, limit);
+        const reservations = await auctionService.getReservationsByPage(page, limit);
 
         res.send(reservations);
     } catch (error) {

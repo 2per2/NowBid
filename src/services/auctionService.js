@@ -1,4 +1,5 @@
-const db = require("../models");
+const db = require("../models"),
+    { sequelize } = require("../models"); 
 
 exports.findAuctionByUser = async (user_id) => {
     return await db.Auction.findAll({ where: { seller_id: user_id }});
@@ -31,7 +32,7 @@ exports.createReservation = async (currentUser, newReservation, photo) => {
     }
 };
 
-exports.getReservations = async (page = 1, limit = 10) => {
+exports.getReservationsByPage = async (page = 1, limit = 10) => {
     try {
         const offset = (page - 1) * limit; // 이미 불러온 데이터는 건너뛰기
 
@@ -56,6 +57,19 @@ exports.getReservations = async (page = 1, limit = 10) => {
     }
 };
 
+exports.getAllReservations = async () => {
+    try {
+        const reservations = await db.Auction.findAll({
+            where: {
+              status: 'reserved'
+            }
+        });
+        return reservations;
+    } catch (error) {
+        throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
+    }
+};
+
 exports.getOneReservation = async (reservation_id) => {
     try {
         const reservation = await db.Auction.findOne({
@@ -70,5 +84,23 @@ exports.getOneReservation = async (reservation_id) => {
         return reservation;
     } catch (error) {
         throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
+    }
+};
+
+exports.updateAuctionStatus = async () => {
+    try {
+        const now = new Date();
+        const result = await sequelize.query(
+            `UPDATE Auctions
+            SET status = 'ongoing'
+            WHERE start_time <= :now AND status = 'reserved'`,
+            {
+                replacements: { now: now.toISOString() },
+                type: sequelize.QueryTypes.UPDATE
+            }
+        );
+        console.log(`Successfully updated ${result[1]} rows.`);
+    } catch (error) {
+        throw new Error('Failed to update reservation statuses: ' + error.message);
     }
 };

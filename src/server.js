@@ -25,6 +25,10 @@ const homeRouter = require("./routers/homeRouter"),
     auctionRouter = require("./routers/auctionRouter");
 
 
+/* Services */
+const { scheduleAuctions } = require("./services/scheduleTasks");
+
+
 /* Initialize sequelize */
 const db = require('./models');
 
@@ -113,6 +117,18 @@ instrument(io, {
 
 require("./socket")(io);
 
+
+/* Start services */
+const startScheduling = async () => {
+    try {
+        scheduleAuctionCheck();
+        console.log('매 분마다 예약 작업 확인 및 업데이트가 스케줄링되었습니다.');
+    } catch (err) {
+        console.error('예약 작업 스케줄링 오류:', err.message);
+    }
+};
+
+startScheduling();
 
 /* Error middleware */
 app.use((err, req, res, next) => {
