@@ -12,7 +12,7 @@ exports.createPhoto = async (newPhoto) => {
         });
         return photo;
     } catch (error) {
-        throw new Error('사진 생성에 실패했습니다: ' + error.message);
+        throw new Error('Failed to create a photo record: ' + error.message);
     }
 };
 
@@ -28,7 +28,7 @@ exports.createReservation = async (currentUser, newReservation, photo) => {
         });
         return reservation;
     } catch (error) {
-        throw new Error('예약 생성에 실패했습니다: ' + error.message);
+        throw new Error('Failed to create a reservation: ' + error.message);
     }
 };
 
@@ -53,7 +53,7 @@ exports.getReservationsByPage = async (page = 1, limit = 10) => {
         };
 
     } catch (error) {
-        throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
+        throw new Error('Failed to get reservations by page: ' + error.message);
     }
 };
 
@@ -66,7 +66,7 @@ exports.getAllReservations = async () => {
         });
         return reservations;
     } catch (error) {
-        throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
+        throw new Error('Failed to get reservations: ' + error.message);
     }
 };
 
@@ -83,7 +83,7 @@ exports.getOneReservation = async (reservation_id) => {
 
         return reservation;
     } catch (error) {
-        throw new Error('데이터를 불러오는데 실패했습니다' + error.message);
+        throw new Error('Failed to get the reservation: ' + error.message);
     }
 };
 

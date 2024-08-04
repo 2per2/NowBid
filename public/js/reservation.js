@@ -20,10 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             if (response.ok) {
                 console.log('successed to create your account');
-                //window.location.href = '/';
             } else {
-                // if email is already in use
-                
+                // If the reservation started
+                window.location.href = `/`;
             }
         })
         .catch(error => {

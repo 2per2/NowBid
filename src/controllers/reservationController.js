@@ -62,11 +62,15 @@ exports.handleGetOneReservation = async (req, res, next) => {
             throw new Error('No reservation data found');
         }
 
-        //res.status(201).json({ success: 'success', reservationData });
-        console.log(reservationData.Photo.path);
+        if (reservationData.status === 'ongoing') {
+            //res.status(500).json({ message: 'The reservation has already started' });
+            res.redirect('/');
+            return;
+        }
+
         res.render("reservations/reservationDetail", { data: reservationData });
     } catch (error) {
-        console.error('Error in handleCreatereservation:', error);
+        console.error('Error in handleCreateReservation:', error);
         res.status(500).json({ message: 'Error getting reservation', error: error.message });
     }
 };
