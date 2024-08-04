@@ -87,15 +87,17 @@ exports.getOneReservation = async (reservation_id) => {
     }
 };
 
-exports.updateAuctionStatus = async () => {
+exports.updateReservationStatus = async () => {
     try {
         const now = new Date();
+        const nowFormatted = now.toISOString().slice(0, 19).replace('T', ' ');
+
         const result = await sequelize.query(
             `UPDATE Auctions
             SET status = 'ongoing'
             WHERE start_time <= :now AND status = 'reserved'`,
             {
-                replacements: { now: now.toISOString() },
+                replacements: { now: nowFormatted },
                 type: sequelize.QueryTypes.UPDATE
             }
         );

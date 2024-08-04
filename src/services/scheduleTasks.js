@@ -1,9 +1,9 @@
 const schedule = require("node-schedule");
-const { auctionService } = require("./auctionService");
+const auctionService = require("./auctionService");
 
 const checkAndStartAuctions = async () => {
     try {
-        await auctionService.updateReservationsStatus();
+        await auctionService.updateReservationStatus();
     } catch (error) {
         console.error(`Error while updating reservations: ${error.message}`);
     }

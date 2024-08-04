@@ -14,7 +14,6 @@ const cookieParser = require("cookie-parser"),
     FileStore = require("session-file-store")(session),
     passport = require("./passport"),
     flash = require("express-flash"),
-    multer = require("multer"),
     morgan = require("morgan");
 
 
@@ -26,7 +25,7 @@ const homeRouter = require("./routers/homeRouter"),
 
 
 /* Services */
-const { scheduleAuctions } = require("./services/scheduleTasks");
+const { scheduleAuctionCheck } = require("./services/scheduleTasks");
 
 
 /* Initialize sequelize */
@@ -129,6 +128,8 @@ const startScheduling = async () => {
 };
 
 startScheduling();
+
+
 
 /* Error middleware */
 app.use((err, req, res, next) => {
