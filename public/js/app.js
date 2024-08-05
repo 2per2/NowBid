@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleEnterRoom(event) {
         event.preventDefault();
-        const roomId = 'dfsf';
+        const roomId = 'test';
         socket.emit("enter_room", roomId, () => {
             fetchToRoom(roomId);
         });
-        socket.emit('welcome');
+    
     }
 
     if (roomBtn) { roomBtn.addEventListener('click', handleEnterRoom) }
