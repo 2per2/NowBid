@@ -5,6 +5,8 @@ exports.findAuctionByUser = async (user_id) => {
     return await db.Auction.findAll({ where: { seller_id: user_id }});
 };
 
+
+/** Reservation zone */
 exports.createPhoto = async (newPhoto) => {
     try {
         const photo = await db.Photo.create({
@@ -18,7 +20,7 @@ exports.createPhoto = async (newPhoto) => {
 
 exports.createReservation = async (currentUser, newReservation, photo) => {
     try {
-        const reservation = await db.Auction.create({
+        const auction = await db.Auction.create({
             seller_id: currentUser.id,
             title: newReservation.title,
             description: newReservation.description,
@@ -26,9 +28,9 @@ exports.createReservation = async (currentUser, newReservation, photo) => {
             status: 'reserved',
             photo_id: photo.id
         });
-        return reservation;
+        return auction;
     } catch (error) {
-        throw new Error('Failed to create a reservation: ' + error.message);
+        throw new Error('Failed to create a auction: ' + error.message);
     }
 };
 
@@ -36,7 +38,7 @@ exports.getReservationsByPage = async (page = 1, limit = 10) => {
     try {
         const offset = (page - 1) * limit; // 이미 불러온 데이터는 건너뛰기
 
-        const reservations = await db.Auction.findAndCountAll({
+        const auctions = await db.Auction.findAndCountAll({
             where: {
               status: 'reserved'
             },
@@ -46,33 +48,33 @@ exports.getReservationsByPage = async (page = 1, limit = 10) => {
           });
 
         return {
-            total: reservations.count,
+            total: auctions.count,
             page: page,
-            totalPages: Math.ceil(reservations / limit),
-            reservations: reservations.rows
+            totalPages: Math.ceil(auctions / limit),
+            auctions: auctions.rows
         };
 
     } catch (error) {
-        throw new Error('Failed to get reservations by page: ' + error.message);
+        throw new Error('Failed to get auctions by page: ' + error.message);
     }
 };
 
 exports.getAllReservations = async () => {
     try {
-        const reservations = await db.Auction.findAll({
+        const auctions = await db.Auction.findAll({
             where: {
               status: 'reserved'
             }
         });
-        return reservations;
+        return auctions;
     } catch (error) {
-        throw new Error('Failed to get reservations: ' + error.message);
+        throw new Error('Failed to get auctions: ' + error.message);
     }
 };
 
 exports.getOneReservation = async (reservation_id) => {
     try {
-        const reservation = await db.Auction.findOne({
+        const auction = await db.Auction.findOne({
             where: { id: reservation_id },
             include: [{
                 // photo_id를 통해 path도 가져오기
@@ -81,9 +83,9 @@ exports.getOneReservation = async (reservation_id) => {
             }]
         });
 
-        return reservation;
+        return auction;
     } catch (error) {
-        throw new Error('Failed to get the reservation: ' + error.message);
+        throw new Error('Failed to get the auction: ' + error.message);
     }
 };
 
@@ -103,6 +105,63 @@ exports.updateReservationStatus = async () => {
         );
         console.log(`Successfully updated ${result[1]} rows.`);
     } catch (error) {
-        throw new Error('Failed to update reservation statuses: ' + error.message);
+        throw new Error('Failed to update auction statuses: ' + error.message);
+    }
+};
+
+
+/** Auction zone */
+exports.getAuctionsByPage = async (page = 1, limit = 10) => {
+    try {
+        const offset = (page - 1) * limit; // 이미 불러온 데이터는 건너뛰기
+
+        const auctions = await db.Auction.findAndCountAll({
+            where: {
+              status: 'ongoing'
+            },
+            limit: limit,
+            offset: offset,
+            order: [['start_time', 'ASC']]
+          });
+
+        return {
+            total: auctions.count,
+            page: page,
+            totalPages: Math.ceil(auctions / limit),
+            auctions: auctions.rows
+        };
+
+    } catch (error) {
+        throw new Error('Failed to get auctions by page: ' + error.message);
+    }
+};
+
+exports.getAllAuctions = async () => {
+    try {
+        const auctions = await db.Auction.findAll({
+            where: {
+              status: 'ongoing'
+            }
+        });
+        return auctions;
+    } catch (error) {
+        throw new Error('Failed to get auctions: ' + error.message);
+    }
+};
+
+exports.getOneAuction= async (auction_id) => {
+    try {
+        const auction = await db.Auction.findOne({
+            where: { id: auction_id },
+            include: [{
+                // photo_id를 통해 path도 가져오기
+                model: db.Photo,
+                attributes: ['path']
+            }]
+        });
+
+        return auction;
+    } catch (error) {
+        throw new Error('Failed to get the auction: ' + error.message);
     }
 };
