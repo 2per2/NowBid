@@ -1,6 +1,6 @@
 const auctionService = require("../services/auctionService");
 
-exports.handleGetAllAuctions = async (req, res, next) => {
+exports.handleGetAuctionsByPage = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page, 10) || 1; // 기본값은 1
         const limit = parseInt(req.query.limit, 10) || 10; // 페이지당 항목 수, 기본값은 10

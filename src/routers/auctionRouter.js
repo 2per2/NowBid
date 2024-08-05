@@ -1,7 +1,8 @@
 const express = require('express'),
-	router = express.Router();
+	router = express.Router(),
+	auctionController = require("../controllers/auctionController");
 
-router.get('/auction', (req, res) => { res.render('auctions/auction')});
-router.get('/auction/:id');
+router.get('/auction', auctionController.handleGetAuctionsByPage);
+router.get('/auction/:id', auctionController.handleGetOneAuction);
 
 module.exports = router;
