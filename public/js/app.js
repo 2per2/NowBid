@@ -3,10 +3,9 @@ const socket = io();
 
 /* Html elements event handlers */
 document.addEventListener('DOMContentLoaded', function() {
-    const roomForm =  document.getElementById('form-room');
-    
-    function fetchToRoom(roomName) {
-        fetch(`/auction/${roomName}`, {
+    const roomBtn = document.getElementById('btn-room');
+    function fetchToRoom(roomId) {
+        fetch(`/room/test`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -15,26 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => {
             if (response.ok) {
                 console.log('successed to join room');
-                window.location.href = `/auction/${roomName}`;
+                window.location.href = `/room/test`;
             } else {
                 console.log('failed to join');
             }
         })
         .catch(error => {
-            console.error('Error occured for join', error);
+            console.error('Error in fetchToRoom', error);
         });
     }
     
-    function handleRoomSubmit(event) {
+    function handleEnterRoom(event) {
         event.preventDefault();
-        const input = roomForm.querySelector("input");
-        roomName = input.value;
-        socket.emit("enter_room", roomName, () => {
-            fetchToRoom(roomName);
+        
+        socket.emit("enter_room", 1, () => {
+            fetchToRoom(1);
         });
-        input.value="";
+        console.log('clicked');
     }
-   roomForm.addEventListener('submit', handleRoomSubmit);
+
+    if (roomBtn) { roomBtn.addEventListener('click', handleEnterRoom) }
 });
 
 
