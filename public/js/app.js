@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function handleEnterRoom(event) {
         event.preventDefault();
-        
-        socket.emit("enter_room", 1, () => {
-            fetchToRoom(1);
+        const roomId = 'dfsf';
+        socket.emit("enter_room", roomId, () => {
+            fetchToRoom(roomId);
         });
-        console.log('clicked');
+        socket.emit('welcome');
     }
 
     if (roomBtn) { roomBtn.addEventListener('click', handleEnterRoom) }
@@ -40,4 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
 /* Socket event handlers */
 socket.on('connect', () => {
     console.log('connected to server');
+});
+socket.on('welcome', () => {
+    console.log('connected to server');
+    const h1 = document.createElement("h1");
+    h1.innerText = 'hello';
+    document.appendChild(h1);
 });

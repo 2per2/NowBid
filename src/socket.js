@@ -3,11 +3,12 @@ module.exports = (io) => {
 	    console.log("Someone connected to server");
 
         // Create or enter the room
-        socket.on("enter_room", (roomName, done) => {
-            socket.join(roomName);
+        socket.on("enter_room", (roomId, done) => {
+            socket.join(roomId);
             socket["name"] = "anonymous";
             done();
-            socket.to(roomName).emit("welcome", socket.name);
+            socket.to(roomId).emit("welcome", socket.name);
         });
+
     });
 }

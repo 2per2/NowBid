@@ -21,7 +21,8 @@ const cookieParser = require("cookie-parser"),
 const homeRouter = require("./routers/homeRouter"),
     authRouter = require("./routers/authRouter"),
     reservationRouter = require("./routers/reservationRouter"),
-    auctionRouter = require("./routers/auctionRouter");
+    auctionRouter = require("./routers/auctionRouter"),
+    roomRouter = require("./routers/roomRouter");
 
 
 /* Services */
@@ -97,6 +98,7 @@ app.get('/reservation/*', reservationRouter);
 app.post('/reservation/*', reservationRouter);
 app.get('/auction', auctionRouter);
 app.get('/auction/*', auctionRouter);
+app.get('/room/*', roomRouter);
 
 
 /* Setting http server and socket.io */
