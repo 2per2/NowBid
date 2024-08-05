@@ -6,10 +6,13 @@ module.exports = (io) => {
         socket.on("enter_room", (roomId, done) => {
             socket.join(roomId);
             socket["name"] = "anonymous";
+            socket.to(roomId).emit("welcome");
             done();
-            socket.to(roomId).emit("welcome", socket.name);
             console.log(socket.id, socket.rooms);
         });
 
+        socket.on('click_chat', (roomId, now) => {
+            socket.to(roomId).emit('chat', now);
+        });
     });
 }

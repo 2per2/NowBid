@@ -4,6 +4,7 @@ const socket = io();
 /* Html elements event handlers */
 document.addEventListener('DOMContentLoaded', function() {
     const roomBtn = document.getElementById('btn-room');
+    const chatBtn = document.getElementById('btn-chat');
     function fetchToRoom(roomId) {
         fetch(`/room/test`, {
             method: 'GET',
@@ -13,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                console.log('successed to join room');
-                window.location.href = `/room/test`;
+                //window.location.href = `/room/test`;
             } else {
                 console.log('failed to join');
             }
@@ -24,16 +24,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    const roomId = 'test';
     function handleEnterRoom(event) {
         event.preventDefault();
-        const roomId = 'test';
         socket.emit("enter_room", roomId, () => {
             fetchToRoom(roomId);
         });
-    
     }
 
     if (roomBtn) { roomBtn.addEventListener('click', handleEnterRoom) }
+    if (chatBtn) { chatBtn.addEventListener('click', (event) => {
+        const now = new Date();
+        socket.emit('click_chat', roomId, now);
+    }) }
 });
 
 
@@ -42,8 +45,6 @@ socket.on('connect', () => {
     console.log('connected to server');
 });
 socket.on('welcome', () => {
-    console.log('connected to server');
-    const h1 = document.createElement("h1");
-    h1.innerText = 'hello';
-    document.appendChild(h1);
+    console.log('someone connected to room');
 });
+socket.on('chat', (now)=>{console.log(now)});
