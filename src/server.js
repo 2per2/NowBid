@@ -44,7 +44,7 @@ app.set("view engine", "ejs");
 app.use(layouts);
 app.set("views", __dirname + "/views");
 const PORT = process.env.PORT || 3000;
-app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../public')));
 const storagePath = process.env.STORAGE_PATH;
 app.use(`/${storagePath}`, express.static(path.join(__dirname, `../${storagePath}`)));
 app.use(

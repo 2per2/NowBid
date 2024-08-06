@@ -7,7 +7,6 @@ module.exports = (io) => {
             socket.join(roomId);
             socket["name"] = "anonymous";
             socket.to(roomId).emit("welcome");
-            done();
             console.log(socket.id, socket.rooms);
         });
 
