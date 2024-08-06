@@ -8,6 +8,7 @@ exports.handleCreateUser = async (req, res, next) => {
             email: email,
             password: password
         };
+        
         const exUser = await authService.findUserByEmail(email);
 
         if (exUser) {
