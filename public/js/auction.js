@@ -1,8 +1,6 @@
-const socket = io();
-
 document.addEventListener('DOMContentLoaded', function() {
     const roomBtn = document.getElementById('btn-room');
-    const chatBtn = document.getElementById('btn-chat');
+    
     function fetchToRoom() {
         fetch(`/room/test`, {
             method: 'GET',
@@ -29,8 +27,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (roomBtn) { roomBtn.addEventListener('click', handleEnterRoom) }
-    if (chatBtn) { chatBtn.addEventListener('click', (event) => {
-        const now = new Date();
-        socket.emit('click_chat', roomId, now);
-    }) }
 });
