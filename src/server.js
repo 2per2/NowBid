@@ -116,6 +116,27 @@ instrument(io, {
     }
 );
 
+// 세션 미들웨어 설정
+const sessionMiddleware = session({
+    store: new FileStore({
+        path: path.join(__dirname, 'sessions'), // 세션 파일이 저장될 디렉토리
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 2 * 60 * 60 * 1000, // 2시간
+    },
+});
+  
+// 세션 미들웨어 사용
+app.use(sessionMiddleware);
+  
+// Socket.IO와 세션 미들웨어 통합
+io.use((socket, next) => {
+    sessionMiddleware(socket.request, socket.request.res || {}, next);
+  });
+
 require("./socket")(io);
 
 
