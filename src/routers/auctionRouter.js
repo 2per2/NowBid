@@ -1,8 +1,9 @@
 const express = require('express'),
 	router = express.Router(),
+	isAuthenticated = require("../middlewares/auth"),
 	auctionController = require("../controllers/auctionController");
 
 router.get('/auction', auctionController.handleGetAuctionsByPage);
-router.get('/auction/:id', auctionController.handleGetOneAuction);
+router.get('/auction/:id', isAuthenticated,auctionController.handleGetOneAuction);
 
 module.exports = router;
