@@ -20,6 +20,7 @@ passport.use('google-signup', new GoogleStrategy({
           // Add other fields if necessary
         }
       });
+      if (created) { user.createWallet(); } // For some reasons, the hook doesn't work
       return cb(null, user);
     } catch (error) {
       return cb(error);
