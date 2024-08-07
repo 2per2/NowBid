@@ -26,12 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true,
         hooks: {
-            afterCreate() { async (user) => {
-                    try {
-                        await user.createWallet();
-                    } catch (error) {
-                        console.error('Error creating wallet:', error);
-                    }
+            async afterCreate(user) {
+                try {
+                    await user.createWallet(); // createWallet 메소드 호출
+                } catch (error) {
+                    console.error('Error creating wallet:', error);
                 }
             }
         }
@@ -51,18 +50,28 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Auction, {
             foreignKey: 'seller_id'
         });
-
         User.hasMany(models.History, {
             foreignKey: 'seller_id'
         });
-
         User.hasMany(models.History, {
             foreignKey: 'bidder_id'
         });
-
         User.hasOne(models.Wallet, {
             foreignKey: 'user_id'
         });
+    };
+
+    User.prototype.createWallet = async function() {
+        const Wallet = sequelize.models.Wallet; // Wallet 모델을 가져옴
+        try {
+            const wallet = await Wallet.create({
+                user_id: this.id,
+                balance: 0
+            });
+            console.log('Wallet created for user:', this.id, wallet);
+        } catch (error) {
+            console.error('Error creating wallet:', this.id, error);
+        }
     };
 
     return User;

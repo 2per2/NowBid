@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
+        winning_bid: {
+            type: DataTypes.DECIMAL(10, 0),
+            defaultValue: 0
+        }
     }, {
         timestamps: true
     });
@@ -37,11 +41,9 @@ module.exports = (sequelize, DataTypes) => {
         History.belongsTo(models.User, {
             foreignKey: 'seller_id'
         });
-
         History.belongsTo(models.User, {
             foreignKey: 'bidder_id'
         });
-
         History.belongsTo(models.Photo, {
             foreignKey: 'photo_id'
         });
