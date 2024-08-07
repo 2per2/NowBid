@@ -3,7 +3,7 @@ const authService = require("./services/authService");
 module.exports = (io) => {
     io.use((socket, next) => {
         const req = socket.request;
-        if (req.session.passport.user) {
+        if (req.session && req.session.passport) {
             // 로그인된 사용자 정보가 있으면
             socket.user = req.session.passport.user;
             next();

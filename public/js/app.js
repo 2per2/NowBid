@@ -19,5 +19,5 @@ socket.on('welcome', (username) => {
 socket.on('chat', (now)=>{console.log(now)});
 socket.on('connect_error', (err) => {
   console.error('Connection error:', err.message);
-  alert('Connection failed: ' + err.message);
+  //alert('Connection failed: ' + err.message);
 });
