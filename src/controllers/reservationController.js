@@ -1,11 +1,11 @@
-const auctionService = require("../services/auctionService");
+const reservationService = require("../services/reservationService");
 
 exports.handleGetReservationsByPage = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page, 10) || 1; // 기본값은 1
         const limit = parseInt(req.query.limit, 10) || 10; // 페이지당 항목 수, 기본값은 10
 
-        const reservations = await auctionService.getReservationsByPage(page, limit);
+        const reservations = await reservationService.getReservationsByPage(page, limit);
 
         res.send(reservations);
     } catch (error) {
@@ -30,7 +30,6 @@ exports.handleCreateReservation = async (req, res, next) => {
         return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     }
     
-
     try {
         const currentUser = req.user;
         const newPhoto = req.file;
@@ -43,8 +42,12 @@ exports.handleCreateReservation = async (req, res, next) => {
         const newReservation = { title, description, startTime: formattedTime };
 
         // 파일과 예약 데이터 생성
-        const photoData = await auctionService.createPhoto(newPhoto);
-        const reservationData = await auctionService.createReservation(currentUser, newReservation, photoData);
+        // If there is no file, noimage will be new photo object
+        let photoData;
+        if (newPhoto) {
+            photoData = await reservationService.createPhoto(newPhoto);
+        }
+        const reservationData = await reservationService.createReservation(currentUser, newReservation, photoData);
 
         // 성공적인 응답 코드와 데이터 반환
         res.status(201).json({ success: 'success', reservationData });
@@ -57,7 +60,7 @@ exports.handleCreateReservation = async (req, res, next) => {
 exports.handleGetOneReservation = async (req, res, next) => {
     try {
         const reservationId = req.params.id;
-        const reservationData = await auctionService.getOneReservation(reservationId);
+        const reservationData = await reservationService.getOneReservation(reservationId);
         if (!reservationData) {
             throw new Error('No reservation data found');
         }
