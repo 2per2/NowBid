@@ -4,11 +4,11 @@ const express = require('express'),
     isAuthenticated = require("../middlewares/auth"),
     upload = require("../middlewares/multerConfig");
 
-router.get('/reservation', reservationController.handleGetReservationsByPage);
-router.get('/reservation/new', isAuthenticated, (req, res) => {
+router.get('/reservations', reservationController.handleGetReservationsByPage);
+router.get('/reservations/new', isAuthenticated, (req, res) => {
     res.render("reservations/createReservation");
 });
-router.post('/reservation/new', upload.single('photo'), reservationController.handleCreateReservation);
-router.get('/reservation/:id', reservationController.handleGetOneReservation);
+router.post('/reservations/new', upload.single('photo'), reservationController.handleCreateReservation);
+router.get('/reservations/:id', reservationController.handleGetOneReservation);
 
 module.exports = router;

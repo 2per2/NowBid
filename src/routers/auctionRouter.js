@@ -3,7 +3,7 @@ const express = require('express'),
 	isAuthenticated = require("../middlewares/auth"),
 	auctionController = require("../controllers/auctionController");
 
-router.get('/auction', auctionController.handleGetAuctionsByPage);
-router.get('/auction/:id', isAuthenticated,auctionController.handleGetOneAuction);
+router.get('/auctions', auctionController.handleGetAuctionsByPage);
+router.get('/auctions/:id', isAuthenticated,auctionController.handleGetOneAuction);
 
 module.exports = router;

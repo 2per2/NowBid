@@ -93,11 +93,11 @@ app.get('/signin', authRouter);
 app.post('/signin', authRouter);
 app.get('/signup/*', authRouter);
 app.get('/signin/*', authRouter);
-app.get('/reservation', reservationRouter);
-app.get('/reservation/*', reservationRouter);
-app.post('/reservation/*', reservationRouter);
-app.get('/auction', auctionRouter);
-app.get('/auction/*', auctionRouter);
+app.get('/reservations', reservationRouter);
+app.get('/reservations/*', reservationRouter);
+app.post('/reservations/*', reservationRouter);
+app.get('/auctions', auctionRouter);
+app.get('/auctions/*', auctionRouter);
 app.get('/room/*', roomRouter);
 
 
