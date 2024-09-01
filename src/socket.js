@@ -18,7 +18,7 @@ module.exports = (io) => {
         // Create or enter the room
         socket.on("enter_room", async (roomId, done) => {
             socket.join(roomId);
-            socket["username"] = user.username;
+            socket["username"] = socket.user.username;
             socket.to(roomId).emit("welcome", socket.username);
             console.log(socket.id, socket.username, socket.rooms);
         });
