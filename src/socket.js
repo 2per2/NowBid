@@ -3,10 +3,11 @@ const authService = require("./services/authService");
 module.exports = (io) => {
     io.use(async (socket, next) => {
         const req = socket.request;
-        const userId = req.session.passport.user;
+        const session = req.session;
         
-        if (userId) {
+        if (session.passport) {
             try {
+                const userId = session.passport.user;
                 const foundUser = await authService.findUserByPk(userId);
                 if (foundUser) {
                     socket.user = foundUser; // 사용자 정보를 소켓에 저장

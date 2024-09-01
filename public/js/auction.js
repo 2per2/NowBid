@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const roomBtn = document.getElementById('btn-room');
+    const roomId = roomBtn.dataset.roomId;
+    console.log(roomId);
     
     function fetchToRoom() {
-        fetch(`/room/test`, {
+        fetch(`/room/${roomId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -20,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    const roomId = 'test';
     function handleEnterRoom(event) {
         event.preventDefault();
         fetchToRoom();

@@ -22,9 +22,10 @@ exports.handleGetOneAuction = async (req, res, next) => {
             throw new Error('No auction data found');
         }
         
+        // Generate roomId with auctionId
         const roomId = cryptoSHA.generateSHA256Hash(auctionId);
 
-        res.render("auctions/auctionDetail", { data: auctionData, roomId: roomId });
+        res.render("auctions/auctionDetail", { data: auctionData, roomid: roomId });
     } catch (error) {
         res.status(500).json({ message: 'Error in handleGetOneAuction ', error: error.message });
     }
