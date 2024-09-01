@@ -1,5 +1,5 @@
 const auctionService = require("../services/auctionService"),
-    bcrypt = require("bcryptjs");
+    cryptoSHA = require("../utils/cryptoUtils");
 
 exports.handleGetAuctionsByPage = async (req, res, next) => {
     try {
@@ -22,7 +22,7 @@ exports.handleGetOneAuction = async (req, res, next) => {
             throw new Error('No auction data found');
         }
         
-        const roomId = await bcrypt.hash(auctionId, 10);
+        const roomId = cryptoSHA.generateSHA256Hash(auctionId);
 
         res.render("auctions/auctionDetail", { data: auctionData, roomId: roomId });
     } catch (error) {
