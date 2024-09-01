@@ -1,16 +1,27 @@
 const authService = require("./services/authService");
 
 module.exports = (io) => {
-    io.use((socket, next) => {
+    io.use(async (socket, next) => {
         const req = socket.request;
-        if (req.session && req.session.passport) {
-            // 로그인된 사용자 정보가 있으면
-            socket.user = req.session.passport.user;
-            next();
+        const userId = req.session.passport.user;
+        
+        if (userId) {
+            try {
+                const foundUser = await authService.findUserByPk(userId);
+                if (foundUser) {
+                    socket.user = foundUser; // 사용자 정보를 소켓에 저장
+                    next(); // 미들웨어를 통과
+                } else {
+                    next(new Error('User not found'));
+                }
+            } catch (error) {
+                console.error('Error finding user:', error);
+                next(new Error('Internal server error')); // 서버 오류 처리
+            }
         } else {
-            next(new Error('Unauthorized'));
+            next(new Error('Unauthorized')); // 로그인되지 않은 경우
         }
-    });
+    });    
 
     io.on("connection", (socket) => {
         console.log("Someone connected to server");
@@ -20,7 +31,7 @@ module.exports = (io) => {
             socket.join(roomId);
             socket["username"] = socket.user.username;
             socket.to(roomId).emit("welcome", socket.username);
-            console.log(socket.id, socket.username, socket.rooms);
+            console.log('Socket info: ', socket.id, socket.username, socket.rooms);
         });
 
         socket.on('click_chat', (roomId, now) => {

@@ -1,8 +1,7 @@
 <%= data.title %>
 <%= data.start_time %>
-<%= data.Photo.path %>
 
-<% if (data.Photo.path) { %>
+<% if (data.Photo) { %>
     <!--경로 앞에 / 붙여야 함-->
     <img src="/<%= data.Photo.path %>" alt="Auction Image" />
 <% } else { %>
