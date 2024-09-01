@@ -21,6 +21,10 @@ exports.handleGetOneAuction = async (req, res, next) => {
             throw new Error('No auction data found');
         }
 
+        if (!auctionData.Photo.path === null) {
+            auctionData.Photo.path = 'uploads';
+        }
+
         res.render("auctions/auctionDetail", { data: auctionData });
     } catch (error) {
         res.status(500).json({ message: 'Error in handleGetOneAuction ', error: error.message });

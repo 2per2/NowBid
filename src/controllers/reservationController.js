@@ -16,6 +16,11 @@ exports.handleGetReservationsByPage = async (req, res, next) => {
 exports.handleCreateReservation = async (req, res, next) => {
     function formatDateTime(startTime) {
         const startDateTime = new Date(startTime);
+
+        if (isNaN(startDateTime)) {
+            console.error("Invalid date format:", startTime);
+            return null;
+        }
     
         // 날짜를 'YYYY-MM-DD' 형식으로 변환
         const year = startDateTime.getUTCFullYear();

@@ -26,13 +26,14 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true,
         hooks: {
+            /*
             async afterCreate(user) {
                 try {
                     await user.createWallet(); // createWallet 메소드 호출
                 } catch (error) {
                     console.error('Error creating wallet:', error);
                 }
-            }
+            }*/
         }
     });
 

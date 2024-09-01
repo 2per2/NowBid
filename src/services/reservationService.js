@@ -20,7 +20,7 @@ exports.createReservation = async (currentUser, newReservation, photo) => {
             description: newReservation.description,
             start_time: newReservation.startTime,
             status: 'reserved',
-            photo_id: photo.id
+            photo_id: (photo) ? photo.id : null
         });
         return auction;
     } catch (error) {
