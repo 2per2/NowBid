@@ -21,7 +21,7 @@ exports.handleGetOneAuction = async (req, res, next) => {
             throw new Error('No auction data found');
         }
         
-        const roomId = 
+        const roomId = uuidv4();
 
         res.render("auctions/auctionDetail", { data: auctionData, roomId: roomId });
     } catch (error) {
