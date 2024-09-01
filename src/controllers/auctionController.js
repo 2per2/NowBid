@@ -20,8 +20,10 @@ exports.handleGetOneAuction = async (req, res, next) => {
         if (!auctionData) {
             throw new Error('No auction data found');
         }
+        
+        const roomId = 
 
-        res.render("auctions/auctionDetail", { data: auctionData });
+        res.render("auctions/auctionDetail", { data: auctionData, roomId: roomId });
     } catch (error) {
         res.status(500).json({ message: 'Error in handleGetOneAuction ', error: error.message });
     }

@@ -2,7 +2,6 @@ const upload = require("./multerConfig");
 
 // Middleware for handling file uploads and text fields
 exports.checkFileUpload = (req, res, next) => {
-    // Call the multer middleware function
     // Handles file upload and updates req.file
     upload.single('photo')(req, res, (err) => {
         if (err) {
