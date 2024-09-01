@@ -144,9 +144,9 @@ require("./socket")(io);
 const startScheduling = async () => {
     try {
         scheduleAuctionCheck();
-        console.log('매 분마다 예약 작업 확인 및 업데이트가 스케줄링되었습니다.');
+        console.log('Reservation tasks are scheduled to be checked and updated every minute');
     } catch (err) {
-        console.error('예약 작업 스케줄링 오류:', err.message);
+        console.error('Reservation tasks scheduling error:', err.message);
     }
 };
 
