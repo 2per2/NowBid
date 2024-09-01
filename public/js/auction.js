@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                window.location.href = `/room/test`;
+                window.location.href = `/room/${roomId}`;
             } else {
-                console.log('failed to join');
+                console.error('failed to join');
             }
         })
         .catch(error => {
