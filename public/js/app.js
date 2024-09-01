@@ -21,3 +21,17 @@ socket.on('connect_error', (err) => {
   console.error('Connection error:', err.message);
   //alert('Connection failed: ' + err.message);
 });
+
+/** Emoji handlers */
+socket.on('emoji_happy', (msg, username) => {
+  console.log(`${username}: ${msg}`);
+});
+socket.on('emoji_angry', (msg, username) => {
+  console.log(`${username}: ${msg}`);
+});
+socket.on('emoji_sad', (msg, username) => {
+  console.log(`${username}: ${msg}`);
+});
+socket.on('emoji_thinking', (msg, username) => {
+  console.log(`${username}: ${msg}`);
+});

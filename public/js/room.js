@@ -1,13 +1,14 @@
-const roomId = 'test'
-window.addEventListener('load', (event) => {
-    socket.emit('enter_room', roomId);
-});
-
 document.addEventListener('DOMContentLoaded', (event) => {
-    const chatBtn = document.getElementById('btn-chat');
-    if (chatBtn) { 
-        chatBtn.addEventListener('click', (event) => {
-        const now = new Date();
-        socket.emit('click_chat', roomId, now);
-    }) }
+    // Bring room id from url path
+    const pathname = window.location.pathname;
+    const roomId = pathname.substring(pathname.lastIndexOf('/') + 1);
+
+    // Add event listener to each emoji buttons
+    const buttons = document.querySelectorAll('#container-emoji button');
+    buttons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const condition = button.id;
+            socket.emit(`click_${condition}`, roomId);
+        });
+    });
 });

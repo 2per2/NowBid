@@ -153,7 +153,6 @@ const startScheduling = async () => {
 startScheduling();
 
 
-
 /* Error middleware */
 app.use((err, req, res, next) => {
     console.error(err.stack);

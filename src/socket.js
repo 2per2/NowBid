@@ -35,8 +35,30 @@ module.exports = (io) => {
             console.log('Socket info: ', socket.id, socket.username, socket.rooms);
         });
 
-        socket.on('click_chat', (roomId, now) => {
-            socket.to(roomId).emit('chat', now);
+        
+        // Emoji
+        socket.on('click_happy', (roomId) => {
+            const msg = "I am happy";
+            const username = socket.user.username;
+            socket.emit('emoji_happy', msg, username);
+        });
+
+        socket.on('click_angry', (roomId) => {
+            const msg = "I am angry";
+            const username = socket.user.username;
+            socket.emit('emoji_angry', msg, username);
+        });
+
+        socket.on('click_sad', (roomId) => {
+            const msg = "I am sad";
+            const username = socket.user.username;
+            socket.emit('emoji_sad', msg, username);
+        });
+
+        socket.on('click_thinking', (roomId) => {
+            const msg = "Hmm...";
+            const username = socket.user.username;
+            socket.emit('emoji_thinking', msg, username);
         });
     });
 }
