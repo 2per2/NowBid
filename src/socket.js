@@ -3,7 +3,7 @@ const authService = require("./services/authService"),
 
 async function isSeller(userId, auctionId) {
     try {
-        const auction = await auctionService.getOneAuction(auctionId);
+        const auction = await auctionService.getOnlyAuction(auctionId);
         return userId === auction.seller_id;
     } catch (error) {
         console.error('Error fetching auction:', error);
@@ -39,7 +39,7 @@ module.exports = (io) => {
         console.log("Someone connected to server");
 
         // Create or enter the room
-        socket.on("enter_room", async (roomId, done) => {
+        socket.on("enter_room", async (roomId, callback) => {
             const session = socket.request.session;
             socket.join(roomId);
             socket["username"] = socket.user.username;
@@ -55,20 +55,23 @@ module.exports = (io) => {
             
             socket.to(roomId).emit("welcome", socket.user.username);
             console.log('Socket info: ', socket.id, socket.user.username, socket.rooms, socket.isSeller);
+            callback(roomId);
         });
 
-        socket.on('getCurrentBid', (callback) => {
-            const price = 100; // 실제로는 동적으로 가져오는 값일 것입니다
-            callback(price);
+        let currentBid = 0;
+        socket.on('updateBid', (bidValue, roomId, callback) => {
+            currentBid = bidValue;
+            const msg = `Current Bid Was Updated To ${currentBid}`;
+            io.in(roomId).emit('attention', msg, currentBid);
+            callback(currentBid);
         });
-        
-
         
         // Emoji
         socket.on('click_happy', (roomId) => {
             const msg = "I am happy";
             const username = socket.user.username;
             socket.to(roomId).emit('emoji_happy', msg, username);
+            console.log('clicked');
         });
 
         socket.on('click_angry', (roomId) => {

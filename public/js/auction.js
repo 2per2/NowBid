@@ -21,11 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error in fetchToRoom', error);
         });
     }
-    
-    function handleEnterRoom(event) {
-        event.preventDefault();
-        fetchToRoom();
-    }
 
-    if (roomBtn) { roomBtn.addEventListener('click', handleEnterRoom) }
+    if (roomBtn) { roomBtn.addEventListener('click', fetchToRoom) }
 });

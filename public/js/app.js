@@ -16,6 +16,16 @@ socket.on('connect', () => {
 socket.on('welcome', (username) => {
     console.log(`${username} connected to room`);
 });
+socket.on('seller', () =>{ // 나중에 낙찰 버튼으로 바꾸기
+  console.log('You are seller');
+});
+socket.on('attention', (msg, updatedBid) => { 
+  console.log(msg);
+  const price = document.getElementById('price');
+  if (price) {
+    price.innerText = updatedBid;
+  }
+});
 socket.on('chat', (now)=>{console.log(now)});
 socket.on('connect_error', (err) => {
   console.error('Connection error:', err.message);
@@ -34,5 +44,3 @@ socket.on('emoji_sad', (msg, username) => {
 socket.on('emoji_thinking', (msg, username) => {
   console.log(`${username}: ${msg}`);
 });
-
-/* Test */
