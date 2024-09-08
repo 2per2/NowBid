@@ -8,9 +8,9 @@
     <p>No image available</p>
 <% } %>
 
-<button id="btn-room" data-room-id="
-<%= roomid %>
-">입장</button>
+<!--Included auction id so that the socket can identify whether the user is a seller or a entrant-->
+<button id="btn-room" data-room-id="<%= roomid %>" data-auction-id="<%= data.id %>"
+>입장</button>
 <button id="btn-chat">채팅</button>
 
 <script src="/js/auction.js" defer></script>

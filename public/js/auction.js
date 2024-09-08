@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const roomBtn = document.getElementById('btn-room');
     const roomId = roomBtn.dataset.roomId;
-    console.log(roomId);
     
     function fetchToRoom() {
         fetch(`/room/${roomId}`, {
@@ -13,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => {
             if (response.ok) {
                 window.location.href = `/room/${roomId}`;
+
             } else {
                 console.error('failed to join');
             }

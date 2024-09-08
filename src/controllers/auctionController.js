@@ -25,6 +25,9 @@ exports.handleGetOneAuction = async (req, res, next) => {
         // Generate roomId with auctionId
         const roomId = cryptoSHA.generateSHA256Hash(auctionId);
 
+        // Set user's session
+        req.session.auctionId = auctionId;
+
         res.render("auctions/auctionDetail", { data: auctionData, roomid: roomId });
     } catch (error) {
         res.status(500).json({ message: 'Error in handleGetOneAuction ', error: error.message });
