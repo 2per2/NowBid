@@ -57,6 +57,12 @@ module.exports = (io) => {
             console.log('Socket info: ', socket.id, socket.user.username, socket.rooms, socket.isSeller);
         });
 
+        socket.on('getCurrentBid', (callback) => {
+            const price = 100; // 실제로는 동적으로 가져오는 값일 것입니다
+            callback(price);
+        });
+        
+
         
         // Emoji
         socket.on('click_happy', (roomId) => {
