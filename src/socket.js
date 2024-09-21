@@ -11,6 +11,12 @@ async function isSeller(userId, auctionId) {
     }
 }
 
+async function moveAuctionToHistory(params) {
+    // 옥션 아이디로 히스토리 만들기
+    // 옥션은 여기서 find 할 것
+    // 입찰가를 업데이트 할 때마다 히스토리를 업데이트 할 거임 ㅅㅂ 이게 다 새로고침 때문이야
+}
+
 module.exports = (io) => {
     io.use(async (socket, next) => {
         const session = socket.request.session;
@@ -37,33 +43,39 @@ module.exports = (io) => {
 
     io.on("connection", (socket) => {
         console.log("Someone connected to server");
+        socket.currentRoom = null;
 
         // Create or enter the room
         socket.on("enter_room", async (roomId, callback) => {
-            const session = socket.request.session;
             socket.join(roomId);
-            socket["username"] = socket.user.username;
+            socket.currentRoom = roomId;
             
             // Check if the user is a seller
+            const session = socket.request.session;
             const auctionId = session.auctionId;
-            const userId = session.passport.user;
+            const userId = socket.user.id;
             const isSellerFlag = await isSeller(userId, auctionId);
             socket["isSeller"] = isSellerFlag;
             if (isSellerFlag) {
                 socket.emit('seller');
             }
-            
-            socket.to(roomId).emit("welcome", socket.user.username);
+
+            console.log(roomId);
+            socket.to(socket.currentRoom).emit("welcome", socket.user.username);
             console.log('Socket info: ', socket.id, socket.user.username, socket.rooms, socket.isSeller);
-            callback(roomId);
+            callback(socket.currentRoom);
         });
 
-        let currentBid = 0;
-        socket.on('updateBid', (bidValue, roomId, callback) => {
-            currentBid = bidValue;
-            const msg = `Current Bid Was Updated To ${currentBid}`;
-            io.in(roomId).emit('attention', msg, currentBid);
-            callback(currentBid);
+        socket.on('updateBid', (bidValue, callback) => {
+            const roomId = socket.currentRoom;
+            
+            const msg = `Current Bid Was Updated To ${bidValue}`;
+            io.in(roomId).emit('attention', msg, bidValue);
+            //callback(roomData[roomId].currentBid);
+        });
+
+        socket.on('click_end', (roomId) => {
+            console.log(`${bidderId} is bidder and the final bid is ${currentBid} in ${roomId}`);
         });
         
         // Emoji

@@ -1,5 +1,5 @@
 const db = require("../models"),
-    { sequelize } = require("../models"); 
+    { sequelize } = require("../models");
 
 exports.findAuctionByUser = async (user_id) => {
     return await db.Auction.findAll({ where: { seller_id: user_id }});

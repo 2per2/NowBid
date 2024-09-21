@@ -13,11 +13,8 @@ const socket = io('http://localhost:3000', {
 socket.on('connect', () => {
     console.log('connected to server');
 });
-socket.on('welcome', (username) => {
-    console.log(`${username} connected to room`);
-});
-socket.on('seller', () =>{ // 나중에 낙찰 버튼으로 바꾸기
-  console.log('You are seller');
+socket.on('welcome', (username, currentBid) => {
+    console.log(`${username} connected to room, ${currentBid}`);
 });
 socket.on('attention', (msg, updatedBid) => { 
   console.log(msg);

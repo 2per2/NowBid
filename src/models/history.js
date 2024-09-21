@@ -5,27 +5,19 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        seller_id: {
+        auction_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Users',
+                model: 'Auction',
                 key: 'id'
             }
         },
         bidder_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            defaultValue: 0,
             references: {
                 model: 'Users',
-                key: 'id'
-            }
-        },
-        photo_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Photos',
                 key: 'id'
             }
         },
@@ -38,14 +30,11 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     History.associate = function(models) {
-        History.belongsTo(models.User, {
-            foreignKey: 'seller_id'
+        History.belongsTo(models.Auction, {
+            foreignKey: 'auction_id'
         });
         History.belongsTo(models.User, {
             foreignKey: 'bidder_id'
-        });
-        History.belongsTo(models.Photo, {
-            foreignKey: 'photo_id'
         });
     };
 
