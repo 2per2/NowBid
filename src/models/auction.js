@@ -13,6 +13,18 @@ module.exports = (sequelize, DataTypes) => {
                 key: 'id'
             }
         },
+        bidder_id: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0,
+            references: {
+                model: 'Users',
+                key: 'id'
+            }
+        },
+        winning_bid: {
+            type: DataTypes.DECIMAL(10, 0),
+            defaultValue: 0
+        },
         title: {
             type: DataTypes.STRING(255),
         },
@@ -43,7 +55,9 @@ module.exports = (sequelize, DataTypes) => {
         auction.belongsTo(models.User, {
             foreignKey: 'seller_id'
         });
-
+        auction.belongsTo(models.User, {
+            foreignKey: 'bidder_id'
+        });
         auction.belongsTo(models.Photo, {
             foreignKey: 'photo_id'
         });

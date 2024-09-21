@@ -1,5 +1,6 @@
 const authService = require("./services/authService"),
-    auctionService = require("./services/auctionService");
+    auctionService = require("./services/auctionService"),
+    historyService = require("./services/historyService");
 
 async function isSeller(userId, auctionId) {
     try {
@@ -9,12 +10,6 @@ async function isSeller(userId, auctionId) {
         console.error('Error fetching auction:', error);
         return false;
     }
-}
-
-async function moveAuctionToHistory(params) {
-    // 옥션 아이디로 히스토리 만들기
-    // 옥션은 여기서 find 할 것
-    // 입찰가를 업데이트 할 때마다 히스토리를 업데이트 할 거임 ㅅㅂ 이게 다 새로고침 때문이야
 }
 
 module.exports = (io) => {
@@ -58,6 +53,8 @@ module.exports = (io) => {
             socket["isSeller"] = isSellerFlag;
             if (isSellerFlag) {
                 socket.emit('seller');
+                const history = await historyService.createHistory(auctionId);
+                console.log("History has created");
             }
 
             console.log(roomId);
