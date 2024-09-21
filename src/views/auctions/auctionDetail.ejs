@@ -1,15 +1,16 @@
-<%= data.auction.title %>
-<%= data.auction.start_time %>
+<%= auctionDetail.title %>
+<%= auctionDetail.description %>
+<%= auction.start_time %>
 
-<% if (data.auctionDetail.Photo) { %>
+<% if (auctionDetail.Photo) { %>
     <!--경로 앞에 / 붙여야 함-->
-    <img src="/<%= data.auctionDetail.Photo.path %>" alt="Auction Image" />
+    <img src="/<%= auctionDetail.Photo.path %>" alt="Auction Image" />
 <% } else { %>
     <p>No image available</p>
 <% } %>
 
 <!--Included auction id so that the socket can identify whether the user is a seller or a entrant-->
-<button id="btn-room" data-room-id="<%= roomid %>" data-auction-id="<%= data.auction.id %>"
+<button id="btn-room" data-room-id="<%= roomId %>" data-auction-id="<%= auction.id %>"
 >입장</button>
 <button id="btn-chat">채팅</button>
 

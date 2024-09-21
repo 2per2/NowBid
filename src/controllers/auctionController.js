@@ -17,8 +17,8 @@ exports.handleGetAuctionsByPage = async (req, res, next) => {
 exports.handleGetOneAuction = async (req, res, next) => {
     try {
         const auctionId = req.params.id;
-        const auctionData = await auctionService.getOneAuction(auctionId);
-        if (!auctionData) {
+        const { auction, auctionDetail } = await auctionService.getOneAuction(auctionId);
+        if (!auction) {
             throw new Error('No auction data found');
         }
         
@@ -28,7 +28,7 @@ exports.handleGetOneAuction = async (req, res, next) => {
         // Set user's session
         req.session.auctionId = auctionId;
 
-        res.render("auctions/auctionDetail", { data: auctionData, roomid: roomId });
+        res.render("auctions/auctionDetail", { auction, auctionDetail, roomId });
     } catch (error) {
         res.status(500).json({ message: 'Error in handleGetOneAuction ', error: error.message });
     }

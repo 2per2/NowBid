@@ -65,18 +65,17 @@ exports.handleCreateReservation = async (req, res, next) => {
 exports.handleGetOneReservation = async (req, res, next) => {
     try {
         const reservationId = req.params.id;
-        const reservationData = await reservationService.getOneReservation(reservationId);
-        if (!reservationData) {
+        const { reservation, reservationDetail } = await reservationService.getOneReservation(reservationId);
+        if (!reservation) {
             throw new Error('No reservation data found');
         }
 
-        if (reservationData.status === 'ongoing') {
+        if (reservation.status === 'ongoing') {
             //res.status(500).json({ message: 'The reservation has already started' });
             res.redirect('/');
             return;
         }
-
-        res.render("reservations/reservationDetail", { data: reservationData });
+        res.render("reservations/reservationDetail", { reservation, reservationDetail });
     } catch (error) {
         console.error('Error in handleCreateReservation:', error);
         res.status(500).json({ message: 'Error getting reservation', error: error.message });

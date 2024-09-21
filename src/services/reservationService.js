@@ -69,14 +69,14 @@ exports.getAllReservations = async () => {
     }
 };
 
-exports.getOneReservation = async (reservation_id) => {
+exports.getOneReservation = async (reservationId) => {
     try {
         const reservation = await db.Auction.findOne({
-            where: { id: reservation_id },
+            where: { id: reservationId },
         });
 
         const reservationDetail = await db.AuctionDetail.findOne({
-            where: { auction_id: auctionId }
+            where: { auction_id: reservationId }
         });
 
         return { reservation, reservationDetail };
