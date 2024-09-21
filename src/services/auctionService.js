@@ -51,7 +51,11 @@ exports.getOneAuction= async (auctionId) => {
             where: { id: auctionId }
         });
 
-        return auction;
+        const auctionDetail = await db.AuctionDetail.findOne({
+            where: { auction_id: auctionId }
+        });
+
+        return { auction, auctionDetail };
     } catch (error) {
         throw new Error('Failed to get the auction: ' + error.message);
     }
