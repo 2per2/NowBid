@@ -25,12 +25,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DECIMAL(10, 0),
             defaultValue: 0
         },
-        title: {
-            type: DataTypes.STRING(255),
-        },
-        description: {
-            type: DataTypes.STRING(255)
-        },
         start_time: {
             type: DataTypes.DATE,
             allowNull: false
@@ -60,6 +54,10 @@ module.exports = (sequelize, DataTypes) => {
         });
         auction.belongsTo(models.Photo, {
             foreignKey: 'photo_id'
+        });
+        auction.hasOne(models.AuctionDetail, {
+            foreignKey: 'auction_id',
+            as: 'details'
         });
     };
 
