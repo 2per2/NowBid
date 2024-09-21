@@ -14,18 +14,18 @@ exports.createPhoto = async (newPhoto) => {
 
 exports.createReservation = async (currentUser, newReservation, photo) => {
     try {
-        const auction = await db.Auction.create({
+        const reservation = await db.Auction.create({
             seller_id: currentUser.id,
             start_time: newReservation.startTime,
         });
         
-        const auctionDetail = await db.AuctionDetail.create({
-            auction_id: auction.id,
+        const reservationDetail = await db.AuctionDetail.create({
+            auction_id: reservation.id,
             title: newReservation.title,
             description: newReservation.description,
             photo_id: (photo) ? photo.id : null
         });
-        return { auction, auctionDetail };
+        return { reservation, reservationDetail };
     } catch (error) {
         throw new Error('Failed to create a auction: ' + error.message);
     }
@@ -71,16 +71,15 @@ exports.getAllReservations = async () => {
 
 exports.getOneReservation = async (reservation_id) => {
     try {
-        const auction = await db.Auction.findOne({
+        const reservation = await db.Auction.findOne({
             where: { id: reservation_id },
-            include: [{
-                // photo_id를 통해 path도 가져오기
-                model: db.Photo,
-                attributes: ['path']
-            }]
         });
 
-        return auction;
+        const reservationDetail = await db.AuctionDetail.findOne({
+            where: { auction_id: auctionId }
+        });
+
+        return { reservation, reservationDetail };
     } catch (error) {
         throw new Error('Failed to get the auction: ' + error.message);
     }
