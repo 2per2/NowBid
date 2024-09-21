@@ -1,6 +1,5 @@
 const authService = require("./services/authService"),
-    auctionService = require("./services/auctionService"),
-    historyService = require("./services/historyService");
+    auctionService = require("./services/auctionService");
 
 async function isSeller(userId, auctionId) {
     try {
