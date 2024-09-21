@@ -48,23 +48,6 @@ exports.getAllAuctions = async () => {
 exports.getOneAuction= async (auctionId) => {
     try {
         const auction = await db.Auction.findOne({
-            where: { id: auctionId },
-            include: [{
-                // photo_id를 통해 path도 가져오기
-                model: db.Photo,
-                attributes: ['path']
-            }]
-        });
-
-        return auction;
-    } catch (error) {
-        throw new Error('Failed to get the auction: ' + error.message);
-    }
-};
-
-exports.getOnlyAuction= async (auctionId) => {
-    try {
-        const auction = await db.Auction.findOne({
             where: { id: auctionId }
         });
 

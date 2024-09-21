@@ -3,7 +3,7 @@ const authService = require("./services/authService"),
 
 async function isSeller(userId, auctionId) {
     try {
-        const auction = await auctionService.getOnlyAuction(auctionId);
+        const auction = await auctionService.getOneAuction(auctionId);
         return userId === auction.seller_id;
     } catch (error) {
         console.error('Error fetching auction:', error);
