@@ -20,7 +20,7 @@ module.exports = (io) => {
         if (session.passport) {
             try {
                 const userId = session.passport.user;
-                const foundUser = await authService.findUserByPk(userId);
+                const foundUser = await authService.getUserByPk(userId);
                 if (foundUser) {
                     socket.user = foundUser; // 사용자 정보를 소켓에 저장
                     next(); // 미들웨어를 통과
