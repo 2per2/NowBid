@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         bidder_id: {
             type: DataTypes.INTEGER,
-            defaultValue: 0,
             references: {
                 model: 'Users',
                 key: 'id'
