@@ -19,11 +19,12 @@ exports.createReservation = async (currentUser, newReservation, photo) => {
             start_time: newReservation.startTime,
             photo_id: (photo) ? photo.id : null
         });
-        const auctionDetail = await db.auctionDetail.create({
+        
+        const auctionDetail = await db.AuctionDetail.create({
             auction_id: auction.id,
             title: newReservation.title,
             description: newReservation.description,
-        })
+        });
         return { auction, auctionDetail };
     } catch (error) {
         throw new Error('Failed to create a auction: ' + error.message);
