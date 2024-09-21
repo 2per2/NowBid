@@ -1,8 +1,8 @@
 const db = require("../models"),
     { sequelize } = require("../models");
 
-exports.getAuctionByUser = async (user_id) => {
-    return await db.Auction.findAll({ where: { seller_id: user_id }});
+exports.getAuctionByUser = async (userId) => {
+    return await db.Auction.findAll({ where: { seller_id: userId }});
 };
 
 
@@ -45,10 +45,10 @@ exports.getAllAuctions = async () => {
     }
 };
 
-exports.getOneAuction= async (auction_id) => {
+exports.getOneAuction= async (auctionId) => {
     try {
         const auction = await db.Auction.findOne({
-            where: { id: auction_id },
+            where: { id: auctionId },
             include: [{
                 // photo_id를 통해 path도 가져오기
                 model: db.Photo,
@@ -62,14 +62,33 @@ exports.getOneAuction= async (auction_id) => {
     }
 };
 
-exports.getOnlyAuction= async (auction_id) => {
+exports.getOnlyAuction= async (auctionId) => {
     try {
         const auction = await db.Auction.findOne({
-            where: { id: auction_id }
+            where: { id: auctionId }
         });
 
         return auction;
     } catch (error) {
         throw new Error('Failed to get the auction: ' + error.message);
+    }
+};
+
+exports.updateBid= async (auctionId, bidderId, bid) => {
+    try {
+        const updatedAuction = await db.Auction.update(
+            {
+                bidder_id: bidderId,
+                winning_bid: bid
+            }, {
+                where: {
+                    id: auctionId
+                }
+            }
+        );
+
+        return updatedAuction;
+    } catch (error) {
+        throw new Error('Failed to update the auction: ' + error.message);
     }
 };

@@ -53,8 +53,6 @@ module.exports = (io) => {
             socket["isSeller"] = isSellerFlag;
             if (isSellerFlag) {
                 socket.emit('seller');
-                const history = await historyService.createHistory(auctionId);
-                console.log("History has created");
             }
 
             console.log(roomId);
