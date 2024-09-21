@@ -1,10 +1,10 @@
 const db = require("../models");
 
-exports.findUserByPk = async (id) => {
+exports.getUserByPk = async (id) => {
     return await db.User.findByPk(id);
 };
 
-exports.findUserByEmail = async (email) => {
+exports.getUserByEmail = async (email) => {
     return await db.User.findOne({ where: { email } });
 };
 

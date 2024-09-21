@@ -1,15 +1,14 @@
 const db = require("../models"),
     { sequelize } = require("../models"); 
 
-exports.findHistoryByUser = async (user_id) => {
+exports.getHistoryByUser = async (user_id) => {
     return await db.History.findAll({ where: { seller_id: user_id }});
 };
 
-exports.createHistory = async (auction) => {
+exports.createHistory = async (auctionId) => {
     try {
         const history = await db.History.create({
-            seller_id: auction.seller_id,
-            photo_id: auction.photo_id
+            auction_id: auctionId
         });
         return history;
     } catch (error) {
