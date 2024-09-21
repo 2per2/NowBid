@@ -51,12 +51,6 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Auction, {
             foreignKey: 'seller_id'
         });
-        User.hasMany(models.History, {
-            foreignKey: 'seller_id'
-        });
-        User.hasMany(models.History, {
-            foreignKey: 'bidder_id'
-        });
         User.hasOne(models.Wallet, {
             foreignKey: 'user_id'
         });

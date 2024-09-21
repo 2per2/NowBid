@@ -17,10 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         Photo.hasOne(models.Auction, {
             foreignKey: 'photo_id'
         });
-
-        Photo.hasOne(models.History, {
-            foreignKey: 'photo_id'
-        });
     };
 
     return Photo;
