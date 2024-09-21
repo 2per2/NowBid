@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Emit socket event
     try {
-        socket.emit('enter_room', roomId, (idcheck, updatedBid) => { 
-            console.log(`You just joined ${idcheck} room, ${updatedBid}`);
-            price.innerText = updatedBid;
+        socket.emit('enter_room', roomId, (idcheck, bid) => { 
+            console.log(`You just joined ${idcheck} room, ${bid}`);
+            price.innerText = bid;
         });
     } catch (error) {
         console.error('Error during socket.emit:', error);

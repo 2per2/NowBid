@@ -53,15 +53,23 @@ module.exports = (io) => {
             if (isSellerFlag) {
                 socket.emit('seller');
             }
+            socket["auctionId"] = auctionId;
 
-            console.log(roomId);
+            // Get auction
+            const auction = await auctionService.getOnlyAuction(auctionId);
+            const bid = auction.winning_bid;
+
             socket.to(socket.currentRoom).emit("welcome", socket.user.username);
             console.log('Socket info: ', socket.id, socket.user.username, socket.rooms, socket.isSeller);
-            callback(socket.currentRoom);
+            callback(socket.currentRoom, bid);
         });
 
-        socket.on('updateBid', (bidValue, callback) => {
+        socket.on('updateBid', async (bidValue, callback) => {
             const roomId = socket.currentRoom;
+            const auctionId = socket.auctionId;
+            const userId = socket.user.id;
+
+            const updatedAuction = await auctionService.updateBid(auctionId, userId, bidValue);
             
             const msg = `Current Bid Was Updated To ${bidValue}`;
             io.in(roomId).emit('attention', msg, bidValue);
