@@ -17,13 +17,13 @@ exports.createReservation = async (currentUser, newReservation, photo) => {
         const auction = await db.Auction.create({
             seller_id: currentUser.id,
             start_time: newReservation.startTime,
-            photo_id: (photo) ? photo.id : null
         });
         
         const auctionDetail = await db.AuctionDetail.create({
             auction_id: auction.id,
             title: newReservation.title,
             description: newReservation.description,
+            photo_id: (photo) ? photo.id : null
         });
         return { auction, auctionDetail };
     } catch (error) {

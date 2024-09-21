@@ -34,13 +34,6 @@ module.exports = (sequelize, DataTypes) => {
             values: ['reserved', 'ongoing', 'completed', 'cancelled'],
             defaultValue: 'reserved'
         },
-        photo_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'Photos',
-                key: 'id'
-            }
-        },
     }, {
         timestamps: true
     });
@@ -51,9 +44,6 @@ module.exports = (sequelize, DataTypes) => {
         });
         auction.belongsTo(models.User, {
             foreignKey: 'bidder_id'
-        });
-        auction.belongsTo(models.Photo, {
-            foreignKey: 'photo_id'
         });
         auction.hasOne(models.AuctionDetail, {
             foreignKey: 'auction_id',

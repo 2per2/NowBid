@@ -19,6 +19,13 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.STRING(255)
         },
+        photo_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'Photos',
+                key: 'id'
+            }
+        },
     }, {
         timestamps: true
     });
@@ -27,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
         auctionDetail.belongsTo(models.Auction, {
             foreignKey: 'auction_id',
             as: 'auction'
+        });
+        auctionDetail.belongsTo(models.Photo, {
+            foreignKey: 'photo_id',
+            as: 'photo'
         });
     };
 
