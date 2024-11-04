@@ -52,10 +52,8 @@ module.exports = (io) => {
             const isSellerFlag = await isSeller(userId, auctionId);
             socket["isSeller"] = isSellerFlag;
             if (isSellerFlag) {
-                socket.emit('seller');
-                
+                socket.emit('seller'); 
             }
-            socket.emit('test', isSellerFlag, userId, auctionId);
             socket["auctionId"] = auctionId;
 
             // Get auction
@@ -67,12 +65,12 @@ module.exports = (io) => {
             callback(socket.currentRoom, bid);
         });
 
-        socket.on('updateBid', async (bidValue, callback) => {
+        socket.on('update_bid', async (bidValue, callback) => {
             const roomId = socket.currentRoom;
             const auctionId = socket.auctionId;
             const userId = socket.user.id;
 
-            const updatedAuction = await auctionService.updateBid(auctionId, userId, bidValue);
+            const updatedAuction = await auctionService.update_bid(auctionId, userId, bidValue);
             
             const msg = `Current Bid Was Updated To ${bidValue}`;
             io.in(roomId).emit('attention', msg, bidValue);
@@ -87,26 +85,25 @@ module.exports = (io) => {
         socket.on('click_happy', (roomId) => {
             const msg = "I am happy";
             const username = socket.user.username;
-            socket.to(roomId).emit('emoji_happy', msg, username);
-            console.log('clicked');
+            io.in(roomId).emit('emoji_happy', msg, username);
         });
 
         socket.on('click_angry', (roomId) => {
             const msg = "I am angry";
             const username = socket.user.username;
-            socket.to(roomId).emit('emoji_angry', msg, username);
+            io.in(roomId).emit('emoji_angry', msg, username);
         });
 
         socket.on('click_sad', (roomId) => {
             const msg = "I am sad";
             const username = socket.user.username;
-            socket.to(roomId).emit('emoji_sad', msg, username);
+            io.in(roomId).emit('emoji_sad', msg, username);
         });
 
         socket.on('click_thinking', (roomId) => {
             const msg = "Hmm...";
             const username = socket.user.username;
-            socket.to(roomId).emit('emoji_thinking', msg, username);
+            io.in(roomId).emit('emoji_thinking', msg, username);
         });
     });
 }

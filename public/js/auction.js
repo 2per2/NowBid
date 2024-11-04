@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const roomBtn = document.getElementById('btn-room');
-    const roomId = roomBtn.dataset.roomId;
+    if (roomBtn) {
+        const roomId = roomBtn.dataset.roomId;
     
     function fetchToRoom() {
         fetch(`/room/${roomId}`, {
@@ -22,5 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (roomBtn) { roomBtn.addEventListener('click', fetchToRoom) }
+    roomBtn.addEventListener('click', fetchToRoom);
+
+    }
+    
 });

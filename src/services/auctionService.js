@@ -73,7 +73,7 @@ exports.getOnlyAuction= async (auctionId) => {
     }
 };
 
-exports.updateBid= async (auctionId, bidderId, bid) => {
+exports.update_bid= async (auctionId, bidderId, bid) => {
     try {
         const updatedAuction = await db.Auction.update(
             {

@@ -1,3 +1,5 @@
+import { setupEmojiHandlers } from './emojiHandlers.js';
+//import { setupRoomHandlers } from './room.js';
 const socket = io('http://localhost:3000', {
     withCredentials: true, // 쿠키를 포함하여 요청을 보냄
     extraHeaders: {
@@ -6,8 +8,7 @@ const socket = io('http://localhost:3000', {
   });
 
 /* Html elements event handlers */
-
-
+console.log(socket);
 
 /* Socket event handlers */
 socket.on('connect', () => {
@@ -29,24 +30,12 @@ socket.on('connect_error', (err) => {
 });
 
 /** Emoji handlers */
-socket.on('emoji_happy', (msg, username) => {
-  console.log(`${username}: ${msg}`);
-});
-socket.on('emoji_angry', (msg, username) => {
-  console.log(`${username}: ${msg}`);
-});
-socket.on('emoji_sad', (msg, username) => {
-  console.log(`${username}: ${msg}`);
-});
-socket.on('emoji_thinking', (msg, username) => {
-  console.log(`${username}: ${msg}`);
-});
+//setupRoomHandlers(socket);
+setupEmojiHandlers(socket);
 
 /* End auction */
-socket.on('finish_auction', () => {
+socket.on('auction_end', () => {
   console.log(`This auction was finished.`);
 });
 
-socket.on('test', (isSellerFlag, userId, auctionId) => {
-  console.log(`test, ${isSellerFlag} ${userId} ${auctionId}`);
-});
+export { socket };
