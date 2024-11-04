@@ -3,7 +3,8 @@ const authService = require("./services/authService"),
 
 async function isSeller(userId, auctionId) {
     try {
-        const auction = await auctionService.getOneAuction(auctionId);
+        const auction = await auctionService.getOnlyAuction(auctionId);
+        console.log(`${userId} ? ${auction.seller_id}`);
         return userId === auction.seller_id;
     } catch (error) {
         console.error('Error fetching auction:', error);
@@ -52,7 +53,9 @@ module.exports = (io) => {
             socket["isSeller"] = isSellerFlag;
             if (isSellerFlag) {
                 socket.emit('seller');
+                
             }
+            socket.emit('test', isSellerFlag, userId, auctionId);
             socket["auctionId"] = auctionId;
 
             // Get auction

@@ -41,3 +41,12 @@ socket.on('emoji_sad', (msg, username) => {
 socket.on('emoji_thinking', (msg, username) => {
   console.log(`${username}: ${msg}`);
 });
+
+/* End auction */
+socket.on('finish_auction', () => {
+  console.log(`This auction was finished.`);
+});
+
+socket.on('test', (isSellerFlag, userId, auctionId) => {
+  console.log(`test, ${isSellerFlag} ${userId} ${auctionId}`);
+});

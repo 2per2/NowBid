@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    socket.on('seller', () =>{ // 나중에 낙찰 버튼으로 바꾸기
+    socket.on('seller', () => { // 나중에 낙찰 버튼으로 바꾸기
         console.log('You are seller');
         const endBtn = document.createElement('button');
         endBtn.id = 'btn-end';
