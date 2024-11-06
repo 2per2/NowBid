@@ -66,7 +66,6 @@ exports.getOnlyAuction= async (auctionId) => {
         const auction = await db.Auction.findOne({
             where: { id: auctionId }
         });
-
         return auction;
     } catch (error) {
         throw new Error('Failed to get the auction: ' + error.message);

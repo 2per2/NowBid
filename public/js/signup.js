@@ -5,11 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
     
             const vusername = document.getElementById('input-username').value,
-                vemail = document.getElementById('input-email').value,
-                vpassword = document.getElementById('input-password').value,
-                vrepassword = document.getElementById('input-repassword').value,
-                error_email = document.getElementById('error-email'),
-                error_pw = document.getElementById('error-repassword');
+            vemail = document.getElementById('input-email').value,
+            vpassword = document.getElementById('input-password').value,
+            vrepassword = document.getElementById('input-repassword').value,
+            error_email = document.getElementById('error-email'),
+            error_pw = document.getElementById('error-repassword');
     
             if (vpassword !== vrepassword) {
                 error_pw.textContent = '비밀번호가 일치하지 않습니다.';
@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(error => {
                     console.error('Error occured for creating your account', error);
                 });
-            
-        }
-    });
+            }
+        });
     }   
 });
